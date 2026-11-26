@@ -1,0 +1,1286 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,booktabs,microtype}
+\usepackage[margin=27mm]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\definecolor{ink}{HTML}{324D54}
+\usepackage[colorlinks=true,linkcolor=ink,urlcolor=ink,citecolor=ink]{hyperref}
+\usepackage[nameinlink,noabbrev,capitalise]{cleveref}
+\setlength{\emergencystretch}{1.5em}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\crefname{conjecture}{Conjecture}{Conjectures}
+\newcommand{\E}{\mathbb E}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\R}{\mathbb R}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Ent}{\operatorname{Ent}}
+\title{A sharp stop-loss bound for Rademacher sums,\\ the constant two in a concave comparison,\\ and local extremal sets on the discrete cube}
+\author{Anonymous\\[3pt]{\small DOI \href{https://doi.org/10.5281/zenodo.24548728}{10.5281/zenodo.24548728}}}
+\date{25 November 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Flip $n$ fair coins, attach real weights with squares summing to one, and
+add the signed weights. How much of this random sum can lie more than one
+standard deviation from zero, on average? We prove that the mean excess
+$\E(|S|-1)_+$ is at most $(\sqrt2-1)/2$, with equality only when two weights
+are equal and all the others vanish, and with a quadratic stability estimate.
+This settles a bound proposed by Lowther on MathOverflow and, through his
+reduction, Kontorovich's question: for independent symmetric random variables
+and every increasing concave $f$ with $f(0)=0$, the expectation of $f$ at
+the square function is at most twice its expectation at the absolute sum.
+The constant two is sharp, the comparison extends to sign-invariant vectors in
+any Hilbert space with linear stability, and it improves the universal constant
+in Kontorovich's lower bound for the total variation distance between product
+measures from $0.1798$ to $(1-e^{-1/2})/2\approx0.1967$.
+The same inequality is the support function of the set of centroids of
+subsets of the discrete cube. Through it we study sets of density near
+$1/4$ with maximal first-level Fourier weight, the equivalent of the
+Ahlswede--Katona minimum average distance problem. Without further
+input we show that the dimension-free maximal weight $W$ satisfies
+$W(1/4\pm h)=2\min(1/4,1/4\pm h)^2+(2+o(1))h^2\log(1/h)$. Assuming
+Lei Yu's recent small-density theorem (an unrefereed 2026 preprint), we
+obtain an exact finite-parameter formula near $1/4$, the next-order terms,
+and nonattainment in finite dimension. Above $1/4$ the optimal sets split
+added mass between two neighbouring faces in proportions $0.979:0.021$,
+the solution of a Curie--Weiss--Potts variational problem. An extension of
+Fang and Huang's capped three-coefficient inequality to all coefficients,
+with stability, gives the analogous results near density $1/8$, again
+assuming Yu's theorem.
+\end{abstract}
+
+\tableofcontents
+
+%======================================================================
+\section{Introduction}\label{sec:intro}
+
+This section explains the question, why it matters, what was known before,
+what this paper adds, and where each result is proved.
+
+\paragraph{The question.}
+Let $\varepsilon_1,\ldots,\varepsilon_n$ be independent random signs, each
+equal to $+1$ or $-1$ with probability one half, and let $a\in\R^n$ be a
+vector of real weights with $\sum_ia_i^2=1$. The weighted sum
+\[
+S_a=\sum_{i=1}^n a_i\varepsilon_i
+\]
+is called a Rademacher sum; it has mean zero and variance one. In September
+2024 Kontorovich asked on MathOverflow \cite{Kontorovich} whether
+\begin{equation}\label{eq:question}
+ \E f\Bigl(\sqrt{\textstyle\sum_i X_i^2}\Bigr)\le 2\,\E f\Bigl(\Bigl|\textstyle\sum_i X_i\Bigr|\Bigr)
+\end{equation}
+for all independent symmetric real random variables $X_1,\ldots,X_n$ and every
+increasing concave function $f$ with $f(0)=0$. The left side measures the
+size of the summands through their square function; the right side measures
+the size of their sum. Lowther \cite{Lowther} reduced the question to Rademacher
+sums of unit variance and to the single function $f(t)=\min(t,1)$, so that
+\eqref{eq:question} is equivalent to
+\begin{equation}\label{eq:clip}
+ \E\min(|S_a|,1)\ge\tfrac12\qquad\text{for every unit vector }a .
+\end{equation}
+He proved \eqref{eq:question} with the constant $(1/\sqrt2-1/4)^{-1}\approx2.187$
+and observed that the constant $2$ would follow from the mean-excess bound
+\begin{equation}\label{eq:lowther}
+ \E(|S_a|-1)_+\le\frac{\sqrt2-1}{2},
+\end{equation}
+where $x_+=\max(x,0)$. Both bounds are attained when two weights equal
+$1/\sqrt2$ and the others vanish; then $|S_a|$ is $0$ or $\sqrt2$ with equal
+probabilities. The thread records the constant two as open.
+
+\paragraph{Why it matters.}
+Kontorovich's motivation was the total variation distance between product
+measures. His lower bound for that distance in terms of the marginal
+distances \cite{KontorovichTV} uses \eqref{eq:question} with Lowther's
+constant; a sharp constant improves it directly
+(\cref{cor:tv}). More broadly, $t\mapsto\E(S_a-t)_+$ is the
+\emph{stop-loss transform} of $S_a$, a standard object in the comparison
+of random variables (see \cite[Section~II]{YuLevel}). Sharp lower bounds for
+$\E|S_a|$ (Khintchine's inequality, with Szarek's constant $1/\sqrt2$
+\cite{Szarek}) and for the tail probabilities $\PP(|S_a|\ge t)$
+\cite{HP} are classical or recent landmarks. A sharp bound for the
+stop-loss transform near one standard deviation, where two equal weights are
+extremal, is a natural companion to these results.
+
+The same functional also governs a problem on the discrete cube
+$\{-1,1\}^n$. For a set $A$ of density $\mu(A)$, write
+$b_A=\E[\varepsilon\,1_A]\in\R^n$ for its unnormalised centroid. Its
+squared length $\|b_A\|^2$ is the first-level Fourier weight of the
+indicator $1_A$, and maximising it at fixed density is equivalent to
+minimising the average Hamming distance within $A$, a problem posed by
+Ahlswede and Katona \cite{AhlswedeKatona} (see \cite[Section~1]{FangHuang} and \cite[Section~I]{YuLevel}). Since
+$\|b_A\|=\max_{\|a\|=1}\E[S_a1_A]$, every bound on $\E(S_a-t)_+$ bounds
+$\|b_A\|-t\mu(A)$; this is how Fang and Huang settled density $1/8$
+\cite{FangHuang}.
+
+\paragraph{What was known.}
+Szarek proved $\E|S_a|\ge1/\sqrt2$ \cite{Szarek}, and Haagerup found all
+the sharp Khintchine constants \cite{Haagerup}. De, Diakonikolas and
+Servedio \cite{DDS} proved a robust version: $\E|S_a|-1/\sqrt2$ is at least
+a constant multiple of the distance from $a$ to the two-equal-weight vectors;
+Eskenazis, Nayar and Tkocz made the constant explicit \cite{ENT}.
+Hollom and Portier determined $\inf_a\PP(|S_a|\ge y)$ for every $y$,
+confirming another conjecture of Lowther; the optimal weights change with
+$y$ \cite{HP}. Yu proved that, for thresholds $t$ beyond a large universal
+constant, $\E(S_a-t)_+$ is strictly below its Gaussian value
+\cite[Theorem~4]{YuLevel}.
+On the cube, the maximal first-level weight at densities $1/2$ and $1/4$ is
+attained by subcubes \cite{AlthoferSillke,FuWeiYeung} (see the account in \cite[Section~1]{FangHuang}); Fang and Huang proved the
+same at density $1/8$ \cite{FangHuang}; and Yu proved that at all
+sufficiently small densities the dimension-free maximum equals the Gaussian
+(Hamming-ball) value and is not attained in any finite dimension
+\cite[Theorem~5]{YuLevel}. Yu asked for the value at $1/8$
+\cite[Problem~2]{YuLevel}; Fang and Huang conjectured the inequality that
+would settle $1/16$ \cite[Conjecture~3.1]{FangHuang}.
+
+\paragraph{What is new.}
+The main results are as follows. Items 1--6 are unconditional.
+Items 7 and 8 use Yu's Theorem~5 \cite{YuLevel}, a September 2026 preprint
+that has not yet been refereed.
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Sharp stop-loss bound} (\cref{thm:stoploss}). For every unit
+ vector $a$ and every $t\in[1/\sqrt2,\,201/200]$,
+ $\E(|S_a|-t)_+\le(\sqrt2-t)/2$, with equality only for two equal weights.
+ At $t=1$ this is Lowther's bound \eqref{eq:lowther}, with a deficit of at
+ least $\dist(a,\mathcal E_2)^2/1000$. The interval cannot extend beyond
+ $[2-\sqrt2,\,2\sqrt2-\sqrt3]$ (\cref{prop:interval}), and numerical
+ evidence suggests that this larger interval is the true one
+ (\cref{conj:interval}).
+\item \textbf{The constant two} (\cref{cor:clip,thm:hilbert}). Inequality
+ \eqref{eq:clip} holds, so \eqref{eq:question} holds with the sharp
+ constant $2$, for every nondecreasing $f$ with $f(0)=0$ and $f(t)/t$
+ nonincreasing, and for sign-invariant vectors in any Hilbert space. As a
+ by-product, $\inf_a\E\min(|S_a|,t)=t/2$ for $0<t\le201/200$
+ (\cref{cor:truncated}).
+\item \textbf{Product measures} (\cref{cor:tv}). The constant in Kontorovich's
+ lower bound $\|P^{\otimes}-Q^{\otimes}\|_{TV}\ge c\min\{1,\|\delta\|_2\}$
+ improves from $0.1798$ to $(1-e^{-1/2})/2$.
+\item \textbf{Stability} (\cref{thm:stability}). In any Hilbert space,
+ $\E\min(\|\sum\varepsilon_ix_i\|,1)-\tfrac12$ is comparable, up to
+ absolute constants, to the distance from the tuple $(x_i)$ to two equal
+ collinear vectors. The constants are explicit (\cref{rem:explicit}).
+\item \textbf{Three equal weights} (\cref{thm:triadic}). Fang and Huang's
+ inequality $\E(|S|-2)_+\le1/4$ for variance-three sums with weights at most
+ one \cite[Lemma~2.4]{FangHuang} holds without the cap on the weights, with
+ a quadratic stability estimate and in a neighbourhood of the threshold.
+\item \textbf{Local profile near density $1/4$, leading term}
+ (\cref{prop:cubestable,thm:cusp}). Sets of nearly maximal first-level weight
+ near density $1/4$ are close to two-coordinate faces, and
+ $W(1/4\pm h)=2\min(1/4,1/4\pm h)^2+(2+o(1))h^2\log(1/h)$.
+\item \textbf{Local profile, finer structure} (\cref{cor:fourfibres,thm:refined}).
+ Using Yu's theorem: an exact formula for $W$ near $1/4$ with three real
+ parameters, nonattainment in finite dimension, and the expansion through
+ the $h^2$ term. Above $1/4$ the added mass is split between two
+ neighbouring faces in the ratio $\lambda_*:(1-\lambda_*)$ with
+ $\lambda_*=0.97875\ldots$.
+\item \textbf{A transfer principle} (\cref{thm:faces}). Any stable stop-loss
+ inequality with $k$ equal extremal weights yields, using Yu's theorem,
+ the same local theory near density $2^{-k}$. It applies for $k=2$ and, by
+ item~5, for $k=3$ (\cref{cor:eighth}). Numerically it cannot apply for
+ $k=5,6$ (\cref{rem:scope}).
+\end{enumerate}
+The proofs of items 1 and 5 are short case analyses built on a quadratic
+majorant with a cosine correction, an idea also used by Fang and Huang
+\cite{FangHuang}. The cube results combine the stability estimates with a
+Gaussian construction in the remaining coordinates.
+
+\paragraph{Roadmap.}
+\Cref{sec:notation} fixes notation. \Cref{sec:excess} proves the sharp
+stop-loss bound. \Cref{sec:comparison} derives the clipped bound, the
+concave comparison in Hilbert space and the application to product
+measures. \Cref{sec:stability} proves stability. \Cref{sec:triadic} treats
+three equal weights. \Cref{sec:cube} studies the cube near density $1/4$,
+first without and then with Yu's theorem, and \cref{sec:faces} gives the
+general transfer theorem and density $1/8$. \Cref{sec:computations}
+describes the accompanying computations, and \cref{sec:open} lists open
+problems.
+
+%======================================================================
+\section{Notation and conventions}\label{sec:notation}
+
+This section collects the notation used throughout.
+
+The signs $\varepsilon=(\varepsilon_1,\ldots,\varepsilon_n)$ are independent
+and uniform on $\{-1,1\}$; $\E$ and $\PP$ refer to them unless stated
+otherwise. For $a\in\R^n$ we write $S_a=\sum_ia_i\varepsilon_i$ and
+$\|a\|$ for the Euclidean norm. A \emph{unit vector} has $\|a\|=1$.
+Zero coordinates may always be appended, so we assume $n\ge k$ when
+comparing with vectors that have $k$ nonzero entries.
+
+For $k\ge1$, $\mathcal E_k$ denotes the set of \emph{signed permutations} of
+$(1,\ldots,1,0,\ldots,0)/\sqrt k$ with exactly $k$ nonzero entries (in the
+current dimension). For a unit vector $a$ we write
+$d(a)=\dist(a,\mathcal E_2)$ for its Euclidean distance to the
+two-equal-weight vectors. If $|a_1|\ge|a_2|$ are the two largest
+magnitudes, then $d(a)^2=2-\sqrt2(|a_1|+|a_2|)$.
+
+$\varphi$ and $\Phi$ are the standard normal density and distribution
+function, $G$ is a standard normal variable, and
+$I(p)=\varphi(\Phi^{-1}(p))$ for $0<p<1$, with $I(0)=I(1)=0$. The function
+$I$ is the Gaussian isoperimetric profile: if $T$ is standard normal and
+$\PP(T>\tau)=p$, then $\E[T1_{\{T>\tau\}}]=I(p)$.
+
+$\cH$ is a real Hilbert space with norm $\|\cdot\|$; complex spaces are
+covered by using the real part of the inner product. Entropy is
+$\Ent(\lambda)=-\sum_i\lambda_i\log\lambda_i$ for a probability vector
+$\lambda$ (natural logarithms, $0\log0=0$), and $\mathcal P_k$ is the set of
+probability vectors of length $k$.
+
+On the cube $\{-1,1\}^n$ with uniform measure $\mu$, a set $A$ has
+centroid vector $b_A=\E[\varepsilon1_A]$. A \emph{$k$-face} is a set
+$\{\varepsilon_{i_1}=\sigma_1,\ldots,\varepsilon_{i_k}=\sigma_k\}$ obtained by
+fixing $k$ coordinates; it has density $2^{-k}$.
+
+%======================================================================
+\section{The sharp stop-loss bound}\label{sec:excess}
+
+This section proves the main inequality, \eqref{eq:lowther} and its
+extension to an interval of thresholds, and explains why the interval cannot
+be much larger.
+
+\begin{theorem}\label{thm:stoploss}
+For every $t$ with $1/\sqrt2\le t\le 201/200$,
+\[
+ \sup_{n,\ \|a\|=1}\E(|S_a|-t)_+=\frac{\sqrt2-t}{2}.
+\]
+Equality holds exactly when $a\in\mathcal E_2$, that is, when two weights
+have magnitude $1/\sqrt2$ and the others vanish. At $t=1$,
+\begin{equation}\label{eq:stab1}
+ \frac{\sqrt2-1}{2}-\E(|S_a|-1)_+\ \ge\ \frac{d(a)^2}{1000},
+\end{equation}
+and the quadratic order is best possible.
+\end{theorem}
+
+The value at $t=1$ is Lowther's proposed bound \eqref{eq:lowther}. The proof
+has three steps: a cosine bound that handles all weight vectors except those
+with two large weights; a direct calculation for two large weights; and a
+convexity argument for thresholds below one.
+
+\begin{proof}
+\emph{Step 1: a cosine bound.} For real $x$,
+\[
+ \frac{x^2}{4}-(|x|-1)_+=\frac{\dist(x,\{0,2,-2\})^2}{4}
+ \ge\frac{1-\cos(\pi x)}{2\pi^2}.
+\]
+The identity is checked on $|x|\le1$ and $|x|\ge1$ separately; the
+inequality follows from $1-\cos y\le y^2/2$, because the three points are
+even integers and $\cos(\pi x)$ has period two. Put
+$P=\E\cos(\pi S_a)=\prod_i\cos(\pi a_i)$. Taking expectations and using
+$\E S_a^2=1$,
+\begin{equation}\label{eq:cos-stop}
+ \E(|S_a|-1)_+\le\frac14-\frac{1-P}{2\pi^2}.
+\end{equation}
+
+\emph{Step 2: most weight vectors.} Order the magnitudes decreasingly and
+let $s=|a_1|+|a_2|$, $u=|a_1|-|a_2|$. Suppose first that we are \emph{not}
+in the case ``exactly two magnitudes exceed $1/2$ and $s\ge6/5$''. If no
+magnitude exceeds $1/2$, then $|P|\le\exp(-\pi^2/2)<1/10$, by
+$|\cos z|\le e^{-z^2/2}$ for $|z|\le\pi/2$. Magnitudes in $(1/2,1]$ have
+negative cosines and the others nonnegative cosines, so an odd number of
+them gives $P\le0$; four of them are impossible since their squares would
+sum to more than one. If exactly two exceed $1/2$ and $s<6/5$, the product
+of their cosines is
+$\tfrac12[\cos(\pi s)+\cos(\pi u)]\le\cos^2(\pi s/2)=\sin^2(\pi(s-1)/2)
+\le\sin^2(\pi/10)<1/10$. In all these cases $P\le1/10$, and
+\eqref{eq:cos-stop} gives
+\[
+ \frac{\sqrt2-1}{2}-\E(|S_a|-1)_+\ \ge\ \frac{\sqrt2-1}{2}-\frac14+\frac{9}{20\pi^2}
+ =0.0027013\ldots>\frac1{400},
+\]
+using $\sqrt2>1.4142$ and $\pi^2<9.88$. The derivative in $t$ of
+$(\sqrt2-t)/2-\E(|S_a|-t)_+$ is $-\tfrac12+\PP(|S_a|>t)$, which lies in
+$[-\tfrac12,\tfrac12]$. Hence at every $t\in[1,201/200]$ the deficit
+remains at least $0.0027013-0.0025>1.4\cdot10^{-4}$, and on
+$[1/\sqrt2,1]$ it is handled in Step~4. At $t=1$, since $d(a)^2\le2$, the
+deficit exceeds $1/400>d(a)^2/1000$.
+
+\emph{Step 3: two large weights.} It remains to treat $|a_1|,|a_2|>1/2$ with
+$s\ge6/5$; write $a=|a_1|$, $b=|a_2|$ and let $R$ be the sum of the
+remaining terms, with variance $v=1-a^2-b^2=1-(s^2+u^2)/2$. Let
+$1\le t\le201/200$; then $0\le u<t<s$. For a constant $c$ and the symmetric
+variable $R$ one has $\E(c+R)_+=c_++\tfrac12\E(|R|-|c|)_+$. Applying this to
+the four equally likely values $\pm s,\pm u$ of $|a_1|\varepsilon_1'+|a_2|\varepsilon_2'$ (after sign changes) gives
+\begin{equation}\label{eq:four-hinges}
+ \E(|S_a|-t)_+=\frac{s-t}{2}+
+ \frac14\sum_{k\in\{s-t,\ t-u,\ t+u,\ s+t\}}\E(|R|-k)_+ .
+\end{equation}
+The four cutoffs are positive and already increasing, because
+$s+u=2a\le2\le2t$. For increasing positive $k_1\le\cdots\le k_4$ with
+partial sums $K_j=k_1+\cdots+k_j$, the sum of the hinges $(x-k_i)_+$ at
+$x\ge0$ equals $\max_{0\le j\le4}(jx-K_j)$, and $jx-K_j\le j^2x^2/(4K_j)$ by
+the arithmetic--geometric mean inequality. Here
+$K=(s-t,\ s-u,\ s+t,\ 2(s+t))$, so the hinge sum is at most $Cx^2$ with
+$C=\max_jj^2/(4K_j)$. Using $s-t\ge6/5-201/200=39/200$, $s-u=2b>1$ and
+$s+t\ge11/5$ we get $C\le50/39$, and $C\le5/4$ when $t=1$. Since
+$v\le1-s^2/2=(\sqrt2-s)(\sqrt2+s)/2\le\sqrt2(\sqrt2-s)$,
+\[
+ \frac{\sqrt2-t}{2}-\E(|S_a|-t)_+\ \ge\ \frac{\sqrt2-s}{2}-\frac{Cv}{4}
+ \ \ge\ \Bigl(\frac12-\frac{\sqrt2\,C}{4}\Bigr)(\sqrt2-s).
+\]
+The bracket is at least $1/2-50\sqrt2/156=0.0467\ldots>0$ on the interval,
+and $1/2-5\sqrt2/16=0.0580\ldots$ at $t=1$. Since
+$\sqrt2-s=d(a)^2/\sqrt2$, the deficit at $t=1$ is at least
+$0.041\,d(a)^2$, which gives \eqref{eq:stab1}. The deficit vanishes only if
+$s=\sqrt2$, which forces $a=b=1/\sqrt2$ and $v=0$.
+For sharpness, take $a_1=\cos\theta$, $a_2=\sin\theta$ near
+$\theta=\pi/4$ and no other weights: then
+$\E(|S_a|-1)_+=(s-1)/2$, so the deficit is
+$(\sqrt2-s)/2=d(a)^2/(2\sqrt2)$.
+
+\emph{Step 4: thresholds below one.} At $t=1/\sqrt2$, the bound
+$(x-t)_+\le x^2/(4t)$ gives $\E(|S_a|-t)_+\le1/(4t)=(\sqrt2-t)/2$. The map
+$t\mapsto\E(|S_a|-t)_+$ is convex, so on $[1/\sqrt2,1]$ it lies below the
+chord through its values at the endpoints, which is the line
+$(\sqrt2-t)/2$; the pair attains this line. Equality at $t=1/\sqrt2$ forces
+$|S_a|\in\{0,\sqrt2\}$ almost surely. If $a$ has $k$ nonzero weights, flip
+their signs one by one from all minus to all plus (after making all weights
+positive): this produces $k+1$ strictly increasing values of $S_a$, so
+$k\le2$, and then $|S_a|\in\{0,\sqrt2\}$ forces two equal weights. At an
+interior point of the chord, equality forces equality at $t=1$, which was
+characterised in Steps 2--3.
+\end{proof}
+
+\begin{remark}
+The bound \eqref{eq:cos-stop} is a quadratic majorant with a trigonometric
+correction whose expectation factorises over the signs. Fang and Huang use
+a majorant of the same type, with two harmonics, for three equal weights
+\cite[Lemma~2.3]{FangHuang}; we use theirs in \cref{sec:triadic}.
+\end{remark}
+
+The interval $[1/\sqrt2,201/200]$ is where our proof works. The next
+proposition shows that the pair cannot be optimal on a much larger interval.
+
+\begin{proposition}\label[proposition]{prop:interval}
+If $0\le t<2-\sqrt2$, a single weight ($a=e_1$) gives
+$\E(|S_a|-t)_+=1-t>(\sqrt2-t)/2$. If $2\sqrt2-\sqrt3<t<\sqrt3$, three equal
+weights give $\E(|S_a|-t)_+=(\sqrt3-t)/4>(\sqrt2-t)/2$. Hence the largest
+interval of thresholds on which two equal weights maximise the stop-loss
+transform is contained in $[2-\sqrt2,\,2\sqrt2-\sqrt3]\approx[0.586,1.096]$.
+\end{proposition}
+
+\begin{proof}
+For $a=e_1$, $|S_a|=1$. For three weights $1/\sqrt3$, $|S_a|$ equals
+$1/\sqrt3$ with probability $3/4$ and $\sqrt3$ with probability $1/4$. The
+stated inequalities are linear in $t$.
+\end{proof}
+
+We conjecture that this interval is exact; see \cref{conj:interval} and
+the evidence in \cref{sec:computations}. The proof above does not reach the
+endpoints because two different weight vectors tie there, so the margin
+used in Step~2 disappears.
+
+%======================================================================
+\section{The constant two and its consequences}\label{sec:comparison}
+
+This section derives the clipped bound \eqref{eq:clip}, the concave
+comparison \eqref{eq:question} with constant two in any Hilbert space, a
+sharp truncated-mean inequality, and the improvement in Kontorovich's
+product-measure bound.
+
+\begin{corollary}[Clipped first moment]\label[corollary]{cor:clip}
+For every unit vector $a$, $\E\min(|S_a|,1)\ge1/2$, with equality exactly
+when $a\in\mathcal E_2$.
+\end{corollary}
+
+\begin{proof}
+Since $\min(x,1)=x-(x-1)_+$ for $x\ge0$, Szarek's inequality
+$\E|S_a|\ge1/\sqrt2$ \cite{Szarek} (see also \cite[Theorem~1.1]{Haagerup}) and
+\cref{thm:stoploss} at $t=1$ give
+$\E\min(|S_a|,1)\ge1/\sqrt2-(\sqrt2-1)/2=1/2$. Equality requires equality in
+\cref{thm:stoploss}.
+\end{proof}
+
+\begin{remark}[A second proof]\label[remark]{rem:second}
+\Cref{cor:clip} also has a short direct proof. Let $m=\max_i|a_i|$. If
+$m\ge1/2$, condition on all signs except that of a largest weight; the two
+resulting values of $S_a$ differ by $2m\ge1$, and the triangle inequality
+for the bounded metric $\min(|x-y|,1)$ gives
+$\min(|x+m|,1)+\min(|x-m|,1)\ge1$. If $m\le1/2$, Haagerup's coefficient
+inequality $\E|S_a|\ge\sum_ia_i^2F(a_i^{-2})$, with
+$F(s)=2\Gamma((s+1)/2)/(\sqrt{\pi s}\,\Gamma(s/2))$ increasing
+\cite[Lemmas~1.3 and~1.4]{Haagerup} (see also
+\cite[Section~4, equation~(9)]{Melbourne} and \cite[equation~(62)]{ENT}),
+gives $\E|S_a|\ge F(4)=3/4$, and $(x-1)_+\le x^2/4$ gives
+$\E\min(|S_a|,1)\ge3/4-1/4$. The equality analysis is a short additional
+argument.
+\end{remark}
+
+\begin{corollary}[Sharp truncated mean]\label[corollary]{cor:truncated}
+For $0<t\le201/200$,
+\[
+ \inf_{n,\ \|a\|=1}\E\min(|S_a|,t)=\frac t2,
+\]
+attained exactly by $a\in\mathcal E_2$.
+\end{corollary}
+
+\begin{proof}
+For $t\le1$, the pointwise bound $\min(y,t)\ge t\min(y,1)$ and
+\cref{cor:clip} give $\E\min(|S_a|,t)\ge t/2$. For $1<t\le201/200$, Szarek's
+inequality and \cref{thm:stoploss} give
+$\E\min(|S_a|,t)=\E|S_a|-\E(|S_a|-t)_+\ge1/\sqrt2-(\sqrt2-t)/2=t/2$. For
+$a\in\mathcal E_2$, $\E\min(|S_a|,t)=\tfrac12\min(\sqrt2,t)=t/2$.
+\end{proof}
+
+A sharp bound for each tail probability $\PP(|S_a|\ge y)$ would not give
+\cref{cor:truncated} by integration over $y$, because the optimal weights
+change with $y$ \cite[Theorem~1.1]{HP}.
+
+We now pass to vectors. Call the joint law of $(X_1,\ldots,X_n)$ in $\cH$
+\emph{sign invariant} if multiplying the coordinates by any fixed signs
+preserves the law. Independent symmetric random vectors have this property.
+
+\begin{theorem}[Concave comparison]\label{thm:hilbert}
+Let $(X_1,\ldots,X_n)$ be a sign-invariant tuple in a Hilbert space $\cH$.
+Let $f\colon[0,\infty)\to[0,\infty)$ be nondecreasing with $f(0)=0$ and
+$f(t)/t$ nonincreasing on $(0,\infty)$. Then
+\[
+ \E f\Bigl(\sqrt{\textstyle\sum_i\|X_i\|^2}\Bigr)
+ \le2\,\E f\Bigl(\Bigl\|\textstyle\sum_iX_i\Bigr\|\Bigr),
+\]
+where both sides may be $+\infty$. Every nondecreasing concave $f$ with
+$f(0)=0$ qualifies. The constant $2$ is sharp.
+\end{theorem}
+
+\begin{proof}
+\emph{Deterministic vectors.} Fix $x_1,\ldots,x_n\in\cH$ and put
+$s^2=\sum_i\|x_i\|^2>0$. The normalised Gram matrix
+$A=(\langle x_i,x_j\rangle/s^2)$ is positive semidefinite with trace one,
+so $A=\sum_kp_kv_kv_k^{\mathsf T}$ with unit vectors $v_k\in\R^n$,
+$p_k>0$ and $\sum_kp_k=1$. Then
+$\|\sum_i\varepsilon_ix_i\|^2/s^2=\varepsilon^{\mathsf T}A\varepsilon
+=\sum_kp_k(v_k\cdot\varepsilon)^2$ and
+\begin{equation}\label{eq:lift}
+ \min\Bigl(\sqrt{\varepsilon^{\mathsf T}A\varepsilon},1\Bigr)
+ \ge\Bigl(\sum_kp_k\min((v_k\cdot\varepsilon)^2,1)\Bigr)^{1/2}
+ \ge\sum_kp_k\min(|v_k\cdot\varepsilon|,1).
+\end{equation}
+The first inequality holds because $\sum_kp_k\min(b_k,1)\le\min(\sum_kp_kb_k,1)$;
+the second is Jensen's inequality. Taking expectations and applying
+\cref{cor:clip} to each $v_k$ gives
+$\E\min(\|\sum_i\varepsilon_ix_i\|/s,1)\ge1/2$. The hypotheses on $f$ give
+$f(y)\ge f(s)\min(y/s,1)$ for all $y\ge0$ (use monotonicity of $f$ for
+$y\ge s$ and of $f(t)/t$ for $y<s$). Therefore
+$\E f(\|\sum_i\varepsilon_ix_i\|)\ge\tfrac12f(s)$.
+
+\emph{Random vectors.} Let $\varepsilon$ be independent of $X$. Apply the
+deterministic inequality conditionally on $X$ and integrate. Sign invariance
+shows that $\sum_i\varepsilon_iX_i$ has the same law as $\sum_iX_i$, while
+the square function is unchanged.
+
+\emph{Sharpness.} For $X_1,X_2$ independent and uniform on
+$\{\pm1/\sqrt2\}$ and $f(t)=\min(t,1)$, the left side is $1$ and the right
+side is $2\cdot\tfrac12$.
+\end{proof}
+
+\Cref{thm:hilbert} answers Kontorovich's question \eqref{eq:question}. The
+class of $f$ is larger than the concave class: for example
+$f(t)=\min(t,1)+\tfrac12\min((t-2)_+,2)$ is not concave but qualifies:
+it is nondecreasing, and $f(t)/t$ equals $1$, $1/t$, $1/2$ and $2/t$ on
+$[0,1]$, $[1,2]$, $[2,4]$ and $[4,\infty)$.
+
+\begin{corollary}[Product measures]\label[corollary]{cor:tv}
+Let $P_1,\ldots,P_n$ and $Q_1,\ldots,Q_n$ be probability measures on finite
+sets, and let $\delta_i=\|P_i-Q_i\|_{TV}$. Then
+\[
+ \Bigl\|\bigotimes_iP_i-\bigotimes_iQ_i\Bigr\|_{TV}
+ \ \ge\ \frac{1-e^{-1/2}}{2}\,\min\{1,\|\delta\|_2\},
+ \qquad \frac{1-e^{-1/2}}{2}=0.19673\ldots
+\]
+\end{corollary}
+
+\begin{proof}
+We follow Kontorovich's proof of \cite[Theorem~1]{KontorovichTV} and change
+one step. By his Lemmas~2 and~3 (reduction to Bernoulli measures and
+symmetrisation) it suffices to treat $\hat P=\mathrm{Ber}(\hat p)$ and
+$\hat Q=\mathrm{Ber}(\hat q)$ on $\{0,1\}^n$ with $\hat q=1-\hat p$ and
+$\|\hat p-\hat q\|_2\ge\tfrac12\|\delta\|_2$; the distance can only
+decrease in this reduction. With $Z$ uniform on $\{0,1\}^n$ and
+$L_i=\log(\hat P_i(Z_i)/\hat Q_i(Z_i))$, his computation gives
+\[
+ \|\hat P-\hat Q\|_{TV}\ \ge\ \E\Bigl[1-\exp\Bigl(-\tfrac12\Bigl|\sum_iL_i\Bigr|\Bigr)\Bigr].
+\]
+The $L_i$ are independent and symmetric (because $\hat q=1-\hat p$), and
+$|L_i|=\log(\hat p_i/\hat q_i)$ in absolute value is constant. Apply
+\cref{thm:hilbert} with $\cH=\R$ and the concave function
+$f(t)=1-e^{-t/2}$; where Kontorovich used Lowther's factor
+$1/\sqrt2-1/4$, we obtain the factor $1/2$:
+\[
+ \|\hat P-\hat Q\|_{TV}\ge\tfrac12 f\Bigl(\sqrt{\textstyle\sum_iL_i^2}\Bigr)
+ \ge\tfrac12\bigl(1-e^{-\|\hat p-\hat q\|_2}\bigr),
+\]
+using $|\log((1+x)/(1-x))|\ge2|x|$ with $x=\hat p_i-\hat q_i$. Finally
+$1-e^{-y}\ge(2-2e^{-1/2})\min(y,\tfrac12)$ for $y\ge0$, by concavity, and
+$\min(\|\hat p-\hat q\|_2,\tfrac12)\ge\tfrac12\min(\|\delta\|_2,1)$.
+\end{proof}
+
+Kontorovich's printed constant is $c>0.1798$, which is
+$(1/\sqrt2-1/4)(1-e^{-1/2})=0.17985\ldots$ \cite[Theorem~1]{KontorovichTV}.
+
+%======================================================================
+\section{Stability}\label{sec:stability}
+
+This section shows that near-equality in \cref{thm:hilbert} forces the
+vectors to be close to two equal collinear vectors, with a linear rate.
+
+For a tuple $x=(x_1,\ldots,x_n)$ in $\cH$ with $\sum_i\|x_i\|^2=1$ put
+\[
+ D(x)=\E\min\Bigl(\Bigl\|\sum_i\varepsilon_ix_i\Bigr\|,1\Bigr)-\frac12,
+ \qquad
+ d_\cH(x)=\min_{w\in\mathcal E_2,\ \|h\|=1}\Bigl(\sum_i\|x_i-w_ih\|^2\Bigr)^{1/2}.
+\]
+Thus $d_\cH(x)$ is the distance, in the product norm, to tuples with two
+equal collinear vectors of length $1/\sqrt2$ (up to sign) and zeros
+elsewhere. For real tuples $d_\cH=d$.
+
+\begin{theorem}[Stability]\label{thm:stability}
+There is an absolute constant $c_\cH>0$ such that, for every unit-energy
+tuple in every Hilbert space,
+\[
+ c_\cH\,d_\cH(x)\ \le\ D(x)\ \le\ d_\cH(x).
+\]
+One may take $c_\cH=\min\{1/(200K),1/(4\sqrt2)\}$ with
+$K=(2+24\sqrt2)/c_0+48$, where $c_0$ is any constant in the robust
+Khintchine inequality $\E|S_a|\ge1/\sqrt2+c_0d(a)$. In particular equality
+in \cref{thm:hilbert} for $f(t)=\min(t,1)$ holds only at two equal
+collinear vectors.
+\end{theorem}
+
+\begin{proof}
+\emph{Upper bound.} Couple $x$ with a nearest extremal tuple $y$ using the
+same signs. Since $\min(\cdot,1)$ is $1$-Lipschitz and $D(y)=0$, Cauchy--Schwarz
+gives $D(x)\le\E\|\sum_i\varepsilon_i(x_i-y_i)\|\le d_\cH(x)$.
+
+\emph{Scalar lower bound.} For a real unit vector $a$, \cref{thm:stoploss}
+gives $D(a)=\E|S_a|-\E(|S_a|-1)_+-\tfrac12\ge\E|S_a|-1/\sqrt2\ge c_0d(a)$, by
+the robust Khintchine inequality of De, Diakonikolas and Servedio
+\cite[Theorem~9]{DDS}.
+
+\emph{Far from the extremal set.} Use the spectral decomposition of the
+normalised Gram matrix $A=\sum_kp_kv_kv_k^{\mathsf T}$ from the proof of
+\cref{thm:hilbert}, now with $s=1$. For fixed signs let
+$y_k=\min(|v_k\cdot\varepsilon|,1)\in[0,1]$. Since
+$\sqrt{\sum p_ky_k^2}-\sum p_ky_k=\Var_p(y)/(\sqrt{\sum p_ky_k^2}+\sum p_ky_k)
+\ge\Var_p(y)/2$, inequality \eqref{eq:lift} and the scalar bound give
+\begin{equation}\label{eq:variance}
+ D(x)\ \ge\ c_0\sum_kp_kd(v_k)+\tfrac12\E\Var_p(y).
+\end{equation}
+Choose $w_k\in\mathcal E_2$ nearest to $v_k$, with $d(v_k)\le\sqrt2$, and
+let $z_k=\min(|w_k\cdot\varepsilon|,1)$. Then $z_k$ is the indicator of a
+parity event $\{\varepsilon_i\varepsilon_j=\sigma\}$ determined by the
+rank-one projector $w_kw_k^{\mathsf T}$, and two different such events
+disagree with probability at least $1/2$. Also
+$\E(y_k-z_k)^2\le d(v_k)^2\le\sqrt2\,d(v_k)$. Group the indices $k$ by
+their projectors, and let $p_*$ be the largest group mass, with projector
+$P_*$. Drawing $k,l$ independently with weights $p$,
+\[
+ 1-p_*\le2\E(z_k-z_l)^2\le6\bigl[\E(z_k-y_k)^2+\E(y_k-y_l)^2+\E(y_l-z_l)^2\bigr]
+ \le\Bigl(\frac{12\sqrt2}{c_0}+24\Bigr)D(x).
+\]
+For unit vectors, $\|uu^{\mathsf T}-vv^{\mathsf T}\|_1\le2\|u-v\|$ in trace
+norm, and distinct projectors are at most $2$ apart, so
+\begin{equation}\label{eq:gram}
+ \|A-P_*\|_1\le2\sum_kp_kd(v_k)+2(1-p_*)\le K\,D(x).
+\end{equation}
+Minimising over $h$ gives
+$d_\cH(x)^2=2-2\max_{w\in\mathcal E_2}\sqrt{w^{\mathsf T}Aw}$, and for the
+$w$ defining $P_*$ we have $w^{\mathsf T}Aw\ge1-\|A-P_*\|_1$. Hence
+$d_\cH(x)^2\le2KD(x)$, which gives $D(x)\ge d_\cH(x)/(200K)$ whenever
+$d_\cH(x)\ge1/100$.
+
+\emph{Near the extremal set.} Suppose $d_\cH(x)<1/100$. Permute and change
+signs so that the minimising pair is $x_1,x_2$ with equal positive weights.
+Put $u=x_1+x_2$, $v=x_1-x_2$, $Z=\sum_{i\ge3}\varepsilon_ix_i$,
+$b=\E\|Z\|^2$ and $L^2=\|v\|^2+b$. Then
+\[
+ d_\cH(x)^2=2-\sqrt2\|u\|,\qquad \|u\|^2=2-2b-\|v\|^2,\qquad
+ d_\cH(x)/\sqrt2\le L\le\sqrt2\,d_\cH(x),
+\]
+the last by writing $d_\cH(x)^2=2(1-\sqrt{1-b-\|v\|^2/2})$. So $L<1/50$
+and $\|u\|>7/5$. Conditioning on the first two signs and using
+$\min(\|u+Z\|,1)\ge1-1_{\{\|u+Z\|<1\}}$,
+\[
+ 2D(x)\ \ge\ \E\min(\|v+Z\|,1)-\PP(\|u+Z\|<1).
+\]
+By the spectral argument without clipping and Szarek's inequality, every
+signed Hilbert sum has first moment at least $1/\sqrt2$ times the root of
+its energy; with an independent sign in front of $v$ (allowed by symmetry
+of $Z$) this gives $\E\|v+Z\|\ge L/\sqrt2$. The bound $(y-1)_+\le y^2/4$
+costs at most $L^2/4$, and Chebyshev's inequality gives
+$\PP(\|u+Z\|<1)\le b/(\|u\|-1)^2\le25L^2/4$. Hence
+$D(x)\ge L/(2\sqrt2)-13L^2/4\ge L/4\ge d_\cH(x)/(4\sqrt2)$.
+\end{proof}
+
+\begin{remark}[Explicit constants]\label[remark]{rem:explicit}
+Eskenazis, Nayar and Tkocz give the explicit robust constant
+$c_0=8\cdot10^{-5}$ \cite[Theorem~8 and Section~5]{ENT}, which yields
+$c_\cH>1.1\cdot10^{-8}$. Fang and Wang's preprint \cite{FangWang} gives
+$c_0=1/20$, which would yield $c_\cH>6.5\cdot10^{-6}$. The scalar estimate
+$c_0d(a)\le D(a)\le d(a)$ holds with the same $c_0$. These constants are far
+from optimal; the point of \cref{thm:stability} is the linear order, which
+is sharp because $D\le d_\cH$.
+\end{remark}
+
+%======================================================================
+\section{Three equal weights}\label{sec:triadic}
+
+This section extends Fang and Huang's inequality for three equal weights to
+all weight vectors and proves the stability needed in \cref{sec:faces}.
+
+Fang and Huang proved \cite[Lemma~2.4]{FangHuang} that if
+$\sum_ia_i^2=3$ and $|a_i|\le1$ for all $i$, then
+$\E(|S_a|-2)_+\le1/4$, with equality exactly for three weights of magnitude
+one. Their proof uses the majorant \cite[Lemma~2.3]{FangHuang}
+\begin{equation}\label{eq:FHmajorant}
+ \Lambda(u)=u^2-1+\frac4\pi\cos\frac{\pi u}{2}-\frac{2}{3\pi}\cos^2\frac{\pi u}{2}
+ \ \ge\ 8(|u|-2)_+,
+\end{equation}
+with equality exactly at $|u|\in\{1,3,5\}$, together with a cosine-product
+inequality \cite[Lemma~2.2]{FangHuang}.
+
+\begin{theorem}\label{thm:triadic}
+There are absolute constants $c_3>0$ and $\eta>0$ such that, for every unit
+vector $a$ and every $t$ with $|t-2/\sqrt3|\le\eta$,
+\[
+ \E(|S_a|-t)_+\le\frac{\sqrt3-t}{4}-c_3\dist(a,\mathcal E_3)^2 .
+\]
+Equality in the bound without the distance term holds exactly on
+$\mathcal E_3$, and the quadratic order is best possible.
+\end{theorem}
+
+The constants $c_3$ and $\eta$ come from a compactness argument and are not
+explicit. We work with weights normalised by $\sum_ia_i^2=3$ and raw
+threshold $u=\sqrt3\,t$, so the claim is
+$\E(|S_a|-u)_+\le(3-u)/4-c\,\delta(a)^2$ with $\delta(a)=\dist(a,\sqrt3\mathcal E_3)$.
+
+\begin{proof}
+\emph{Large weights.} Let $m$ be the largest magnitude and suppose $m>1$;
+then $m\le\sqrt3<2$. Write $S_a=m\varepsilon+R$. Symmetry gives
+$\E(|m\varepsilon+R|-2)_+=\tfrac12\E[(|R|-(2-m))_++(|R|-(2+m))_+]$. For
+$x\ge0$ the bracket is at most $x^2/[4(2-m)]$: its two affine pieces are
+$x-(2-m)$ and $2x-4$, with quadratic majorants $x^2/[4(2-m)]$ and $x^2/4$.
+Since $\E R^2=3-m^2$,
+\begin{equation}\label{eq:triple-large}
+ \E(|S_a|-2)_+\le\frac{3-m^2}{8(2-m)}=\frac14-\frac{(m-1)^2}{8(2-m)}<\frac14 .
+\end{equation}
+For $m\le1$, Fang and Huang's lemma gives the inequality and the equality
+case.
+
+\emph{Compactness.} Consider a sequence of weight vectors (ordered
+decreasingly in magnitude, padded with zeros) whose deficit at $u=2$ tends
+to zero. By \eqref{eq:triple-large}, the largest magnitude has limit at most
+one. Pass to coordinatewise limits $b_i$; then $\sum_ib_i^2\le3$ and the
+sums converge in law to
+$T=\sum_ib_i\varepsilon_i+\sigma G$ with $\sigma^2=3-\sum_ib_i^2$ and $G$
+independent standard normal. (The $i$-th ordered weight satisfies
+$a_i^2\le3/i$, so the fourth powers beyond index $m$ sum to at most
+$9/(m+1)$ uniformly, and the tail is asymptotically Gaussian.) Fourth
+moments are at most $27$, so $\E(|T|-2)_+=1/4$ in the limit. Approximating
+$T$ by the first $m$ weights together with many equal small weights of the
+right total energy (all of magnitude at most one) and applying
+\eqref{eq:FHmajorant} and Fang and Huang's argument to the approximants
+gives $\E\Lambda(T)\le2$. Since $\Lambda(T)-8(|T|-2)_+\ge0$ has expectation
+at most zero, $T$ is supported on $\{\pm1,\pm3,\pm5\}$. A Gaussian component
+would make $T$ continuous, so $\sigma=0$. Infinitely many nonzero $b_i$ would
+give infinitely many support points, since the first $m$ positive weights
+already produce $m+1$ distinct sums. So $T$ is a finite Rademacher sum with
+weights at most one and zero deficit, and Fang and Huang's equality case
+shows that it has exactly three weights of magnitude one. Since
+$\sum_ib_i^2=3$, coordinatewise convergence upgrades to convergence in
+$\ell^2$. Hence the deficit at $u=2$ is bounded below by a positive
+constant outside every fixed neighbourhood of the equality set.
+
+\emph{Near the equality set.} After ordering and sign changes put
+$\delta^2=\sum_{i\le3}(a_i-1)^2+\sum_{i>3}a_i^2$, $s=a_1+a_2+a_3$ and
+$v=\sum_{i>3}a_i^2$, so that $\delta^2=6-2s$ and $v\le\delta^2$. Suppose
+$\delta\le1/32$ and $u\in[7/4,9/4]$. The eight signed sums $c$ of the first
+three terms lie within $3/32$ of $\pm1$ or $\pm3$, hence at distance more
+than $1/2$ from the kinks $\pm u$ of $\ell_u(x)=(|x|-u)_+$; two of them lie
+outside $[-u,u]$ and six inside, so their mean excess is $(s-u)/4$. For the
+independent remainder $R$, convexity and the distance to the kinks give
+\[
+ 0\le\ell_u(c+R)-\ell_u(c)-\ell_u'(c)R\le2|R|1_{\{|R|\ge1/2\}}\le16R^4 .
+\]
+As $\E R=0$ and $\E R^4\le3v^2$, the deficit from $(3-u)/4$ is at least
+$(3-s)/4-48v^2\ge\delta^2/8-48\delta^4\ge\delta^2/16$.
+
+\emph{Conclusion.} Outside the neighbourhood $\delta\le1/32$ compactness
+gives a positive gap at $u=2$. The deficit relative to $(3-u)/4$ is
+$3/4$-Lipschitz in $u$, so a small fixed interval around $u=2$ keeps half
+this gap; as $\delta$ is bounded, the gap is a multiple of $\delta^2$.
+Rescaling by $1/\sqrt3$ gives the theorem. Perturbing only the first three
+weights on the sphere gives deficit exactly $\delta^2/8$ at $u=2$, so the
+quadratic order is sharp.
+\end{proof}
+
+%======================================================================
+\section{Sets of large first-level weight near density one quarter}\label{sec:cube}
+
+This section applies \cref{thm:stoploss} to the discrete cube. We first
+prove a localisation estimate and the leading term of the local profile
+without any recent input, and then use Yu's small-density theorem to obtain
+the finer structure.
+
+\paragraph{Set-up.}
+For $A\subseteq\{-1,1\}^n$ with density $\mu(A)$ and centroid vector
+$b_A=\E[\varepsilon1_A]$, the number $\|b_A\|^2$ is the first-level Fourier
+weight of $1_A$. If $X,Y$ are independent and uniform on $A$, their mean
+Hamming distance is $n/2-\|b_A\|^2/(2\mu(A)^2)$ \cite[Lemma~2.1]{FangHuang},
+\cite[equation~(4)]{YuLevel}, so maximising $\|b_A\|^2$ at fixed density is
+the Ahlswede--Katona average-distance problem \cite{AhlswedeKatona}. We use
+the dimension-free profile
+\[
+ W(\alpha)=\lim_{\eta\downarrow0}\ \sup\bigl\{\|b_A\|^2:\ n\ge1,\
+ A\subseteq\{-1,1\}^n,\ |\mu(A)-\alpha|<\eta\bigr\}.
+\]
+At dyadic densities $W$ equals the supremum at exact density, and $W$ is the
+continuous extension used by Yu \cite[Section~II-D]{YuLevel}. The values
+$W(1/4)=1/8$ \cite{FuWeiYeung} and $W(1/8)=3/64$ \cite{FangHuang} are
+known, with $2$-faces and $3$-faces as the extremal sets. All logarithms are
+natural, and $h\downarrow0$ is taken after the dimension-free supremum.
+
+We use the following signed form of the first-level inequality (Chang's
+lemma; compare \cite[Theorem~1]{YuLevel}): for an event $B$ of mass $p$
+and a sign-valued function $\xi$ on $B$, the vector
+$v=\E[\xi\varepsilon1_B]$ satisfies
+\begin{equation}\label{eq:signedchang}
+ \|v\|\le p\sqrt{2\log(2/p)} .
+\end{equation}
+For a unit vector $u$, $u\cdot v\le p\,\E[|S_u|\mid B]$, and Jensen's
+inequality with $\E e^{\lambda|S_u|}\le2e^{\lambda^2/2}$ gives
+$\E[|S_u|\mid B]\le(\log(2/p)+\lambda^2/2)/\lambda$; take
+$\lambda=\sqrt{2\log(2/p)}$.
+
+\begin{proposition}[Localisation]\label[proposition]{prop:cubestable}
+Let $M=(\sqrt2-1)/4$ and $\Delta(A)=M-\|b_A\|+\mu(A)\ge0$. For $n\ge2$,
+\[
+ c\min_Q\mu(A\triangle Q)\ \le\ \Delta(A)\ \le\ C\min_Q\mu(A\triangle Q),
+\]
+where $Q$ ranges over $2$-faces, $C=1+\sqrt2$ and
+$1/c=2/\gamma+8000/\gamma^2$ with $\gamma=\sqrt2-1$.
+\end{proposition}
+
+\begin{proof}
+For a unit vector $a$, symmetry and \cref{thm:stoploss} give
+$\E[(S_a-1)1_A]\le\E(S_a-1)_+=\tfrac12\E(|S_a|-1)_+\le M$. Choose $a$ in the
+direction of $b_A$ (arbitrarily if $b_A=0$), so that $\E[S_a1_A]=\|b_A\|$;
+this shows $\Delta(A)\ge0$, and $\Delta(A)$ is the sum of the two
+nonnegative slacks $\sigma_1=\E(S_a-1)_+-\E[(S_a-1)1_A]$ and
+$\sigma_2=M-\E(S_a-1)_+$. By \eqref{eq:stab1}, $\sigma_2\ge d(a)^2/2000$.
+Let $w\in\mathcal E_2$ be nearest to $a$; then $Q=\{S_w>1\}$ is a $2$-face,
+and $|S_w-1|\ge\gamma$ everywhere. On the event $|S_a-S_w|<\gamma/2$, each
+point of $A\triangle Q$ contributes at least $\gamma/2$ to $\sigma_1$
+(through $(S_a-1)_+$ on $Q\setminus A$ and $(S_a-1)_-$ on $A\setminus Q$).
+Chebyshev's inequality bounds the remaining event by
+$4\|a-w\|^2/\gamma^2$. Hence
+$\mu(A\triangle Q)\le2\sigma_1/\gamma+8000\sigma_2/\gamma^2\le\Delta(A)/c$.
+Conversely, testing the direction $w$ of any $2$-face $Q$ gives
+$\Delta(A)\le\E[(S_w-1)(1_Q-1_A)]\le(1+\sqrt2)\mu(A\triangle Q)$, since
+$\E[(S_w-1)1_Q]=M$ and $|S_w-1|\le1+\sqrt2$.
+\end{proof}
+
+\begin{theorem}[Leading term]\label{thm:cusp}
+As $h\downarrow0$,
+\[
+ W\bigl(\tfrac14\pm h\bigr)=2\min\bigl(\tfrac14,\tfrac14\pm h\bigr)^2+(2+o(1))\,h^2\log(1/h).
+\]
+In particular $W$ has left derivative $1$ and right derivative $0$ at $1/4$.
+This result does not use \cite{YuLevel}.
+\end{theorem}
+
+\begin{proof}
+\emph{Lower bound.} Let $Q=\{\varepsilon_1=\varepsilon_2=1\}$ and
+$w=(e_1+e_2)/\sqrt2$. Below $1/4$ remove mass $h$ from $Q$; above $1/4$ add
+mass $h$ inside the neighbouring face $\{\varepsilon_1=1,\varepsilon_2=-1\}$.
+In both cases choose the removed or added points by thresholding the
+normalised sum $T_m$ of $m$ further coordinates, so that the conditional mass
+in the face is close to $4h$. The projection of $b_A$ on $w$ is
+$p_0=\sqrt2\min(\alpha,1/4)$ with $\alpha=1/4\pm h$. By the central limit
+theorem and uniform integrability (second moments equal one and the normal
+law has no atoms), the component along the common direction of the $m$
+coordinates tends to $I(4h)/4$ as $m\to\infty$. Hence
+$W(\alpha)\ge p_0^2+I(4h)^2/16=p_0^2+(2+o(1))h^2\log(1/h)$, by
+$I(p)\sim p\sqrt{2\log(1/p)}$.
+
+\emph{Upper bound.} Let $A$ have density $1/4\pm h$, and assume
+$\|b_A\|\ge p_0$ (otherwise there is nothing to prove). Then $\Delta(A)\le h$
+above $1/4$ and $\Delta(A)\le(\sqrt2-1)h$ below it, so by
+\cref{prop:cubestable} and symmetry there is a $2$-face, say $Q$ as above,
+with $\delta=\mu(A\triangle Q)=O(h)$ uniformly in $n$. Put
+$r=\mu(Q\setminus A)$, $s=\mu(A\setminus Q)$ and $z=\min(r,s)$, so that
+$\delta=h+2z$. The projection $p$ of $b_A$ on $w$ satisfies
+$p\le p_0-\sqrt2z$: removal from $Q$ costs $\sqrt2$ per unit of mass and
+additions outside $Q$ have nonpositive projection. Also $p=p_0+O(h)$. The
+component of $b_A$ orthogonal to $w$ is that of $b_A-b_Q$, of norm at most
+$\delta\sqrt{2\log(2/\delta)}$ by \eqref{eq:signedchang}. From
+$\|b_A\|^2\ge p_0^2$ we get $(p_0-p)(p_0+p)\le2\delta^2\log(2/\delta)$,
+hence $z=O(h^2\log(1/h))$ and $\delta=h+O(h^2\log(1/h))$. Therefore
+$\|b_A\|^2\le p_0^2+2\delta^2\log(2/\delta)=p_0^2+(2+o(1))h^2\log(1/h)$.
+The bounds are uniform in $n$ and pass to $W$.
+\end{proof}
+
+\subsection{Finer structure, using Yu's small-density theorem}
+
+The rest of this section, and the exact formulae of \cref{sec:faces}, use
+the following theorem of Yu. Yu proves that there is a universal $a_{\mathrm Y}>0$
+such that every Boolean function $g$ on any finite cube with mean
+$p\in(0,a_{\mathrm Y}]$ satisfies $\sum_i\hat g_i^2<I(p)^2$, and that
+$W(p)=I(p)^2$ for $0<p\le a_{\mathrm Y}$ \cite[Theorem~5, version~2]{YuLevel}. In our
+notation: every set $B$ of density $p\in(0,a_{\mathrm Y}]$ has $\|b_B\|<I(p)$, and
+by complementation every set of density $1-p$ has $\|b_B\|<I(p)$. The
+threshold $a_{\mathrm Y}$ is not explicit, so the neighbourhoods below have no
+specified width.
+
+\begin{corollary}[Exact formula; uses \cite{YuLevel}]\label[corollary]{cor:fourfibres}
+For $|\alpha-1/4|$ sufficiently small,
+\[
+ W(\alpha)=\frac1{16}\max\Bigl\{\Bigl\|\sum_{e\in\{-1,1\}^2}e\,p_e\Bigr\|^2
+ +\Bigl(\sum_{e\in\{-1,1\}^2}I(p_e)\Bigr)^2:\ 0\le p_e\le1,\ \sum_ep_e=4\alpha\Bigr\}.
+\]
+The maximum is over three free real parameters.
+\end{corollary}
+
+\begin{proof}
+\emph{Lower bound.} Condition on the first two signs $e$. In the fibre over
+$e$, take an upper threshold set of the \emph{same} normalised sum of the
+remaining coordinates with conditional mass close to $p_e$. As in
+\cref{thm:cusp}, the first two centroid coordinates tend to
+$\sum_eep_e/4$ and the component along the common direction tends to
+$\sum_eI(p_e)/4$.
+
+\emph{Upper bound.} Take sets with densities tending to $\alpha$ and
+weights tending to $W(\alpha)$. By the lower bound, their weights are at
+least $2\min(\alpha,1/4)^2-o(1)$, so \cref{prop:cubestable} places them
+within $O(|\alpha-1/4|)+o(1)$ of $2$-faces. Use the two coordinates of the
+face. One conditional density is close to one and the other three are
+close to zero; each $\min(p_e,1-p_e)$ is at most four times the symmetric
+difference. Choose the neighbourhood so that these lie in $(0,a_{\mathrm Y}]$. By
+Yu's theorem each conditional centroid (in the remaining coordinates) has
+norm at most $I(p_e)$, and the triangle inequality bounds the remaining
+part of $b_A$ by $\sum_eI(p_e)/4$. Compactness and continuity of $I$ pass to
+a limiting tuple.
+\end{proof}
+
+The tuples realising the maximum can be taken \emph{localised}, that is,
+within $O(|\alpha-1/4|)$ of $(1,0,0,0)$ in the order $++,+-,-+,--$ up to
+symmetry. Indeed, in the lower-bound construction every coordinate of
+$b_A$ beyond the first two is $O(m^{-1/2})$, so for large $m$ the nearest
+direction in $\mathcal E_2$ uses the first two coordinates, and
+\cref{prop:cubestable} then applies to the face they define.
+
+Write $H_2(\lambda)=-\lambda\log\lambda-(1-\lambda)\log(1-\lambda)$ for the
+binary entropy and put
+\[
+ \kappa_2=\max_{0\le\lambda\le1}\bigl\{2H_2(\lambda)+2(2\lambda-1)^2\bigr\}
+ =2.0393421359\ldots .
+\]
+
+\begin{theorem}[Next-order terms; uses \cite{YuLevel}]\label{thm:refined}
+As $h\downarrow0$,
+\begin{align*}
+ W(\tfrac14-h)&=2(\tfrac14-h)^2+\tfrac1{16}I(4h)^2+o(h^2),\\
+ W(\tfrac14+h)&=\tfrac18+\tfrac1{16}I(4h)^2+\kappa_2h^2+o(h^2),
+\end{align*}
+where
+$\tfrac1{16}I(4h)^2=h^2\{2\log(1/h)-\log\log(1/h)+2-\log(64\pi)+o(1)\}$.
+Above $1/4$, maximising tuples put essentially all added mass in the two
+faces adjacent to the main face, in proportions converging to
+$\lambda_*=(1+m_*)/2=0.9787520120\ldots$ and $1-\lambda_*$, where $m_*$ is
+the unique root of $m=\tanh(2m)$ in $(0,1)$, up to exchanging the two faces.
+\end{theorem}
+
+The two expansions share the $h^2\log(1/h)$ and $h^2\log\log(1/h)$ terms
+and differ in the constant multiple of $h^2$; above $1/4$ the gain
+$\kappa_2h^2$ comes from splitting the added mass unequally between two
+faces. The proportions describe maximisers of the reduced problem in
+\cref{cor:fourfibres}; whether every near-optimal \emph{set} has these
+proportions is left open (\cref{sec:open}).
+
+\begin{proof}
+By \cref{cor:fourfibres} and the remark after it, write $q=4h$,
+$L=\log(1/q)$ and take localised conditional masses
+$(1-r,x,y,z)$ (order $++,+-,-+,--$) with $r,x,y,z=O(q)$. The objective is
+\begin{equation}\label{eq:reduced-objective}
+ \frac{(1-r-z)^2+(x-y)^2}{8}+\frac{[I(r)+I(x)+I(y)+I(z)]^2}{16}.
+\end{equation}
+
+\emph{Removing the wasteful allocations.} Above $1/4$ set $w=r+z$,
+$s=x+y=q+r-z$ and $\lambda=x/s$ (any $\lambda$ if $s=0$), and compare with
+$(r,x,y,z)=(0,q\lambda,q(1-\lambda),0)$. The first term of
+\eqref{eq:reduced-objective} is larger for the comparison tuple by at least
+$w/4-O(qw)$. The adjacent Gaussian terms of the original tuple exceed those
+of the comparison tuple by at most $Cw\sqrt L$ when $s>q$ (use
+$I'(p)=-\Phi^{-1}(p)$ and
+$\lambda\sqrt{\log(1/(q\lambda))}+(1-\lambda)\sqrt{\log(1/(q(1-\lambda)))}\le\sqrt{L+H_2(\lambda)}$),
+and are smaller when $s\le q$. The terms $I(r)+I(z)$ are at most
+$2I(w/2)\le Cw\sqrt{\log(2/w)}$ by concavity of $I$. All Gaussian sums are
+$O(q\sqrt L)$ and $w=O(q)$. Expanding the square, the objective of the
+original tuple exceeds that of the comparison tuple by at most
+\begin{equation}\label{eq:wrong-fibres}
+ -\frac w8+Cq\sqrt L\,w\sqrt{\log(2/w)}
+\end{equation}
+for small $q$, after absorbing terms of order $qwL$ (including the square
+of $I(r)+I(z)$, since $w\log(2/w)=O(qL)$ for $w=O(q)$). If $w\ge q^3$, the
+second term is $O(qLw)$, so \eqref{eq:wrong-fibres} is negative and the
+comparison tuple is strictly better. If $w<q^3$, \eqref{eq:wrong-fibres}
+is $O(q^4L)=o(q^2)$. Therefore
+\begin{equation}\label{eq:adjacent-reduction}
+ W(\tfrac14+h)=\frac18+\max_{0\le\lambda\le1}\Bigl\{\frac{q^2(2\lambda-1)^2}{8}
+ +\frac{[I(q\lambda)+I(q(1-\lambda))]^2}{16}\Bigr\}+o(q^2),
+\end{equation}
+with all constants independent of $\lambda$. Below $1/4$, $r=q+x+y+z$;
+put $w=x+y+z$ and compare with $(q,0,0,0)$. The first term again loses at
+least $w/4-O(qw)$, $I(q+w)-I(q)\le Cw\sqrt L$ and
+$I(x)+I(y)+I(z)\le3I(w/3)$, so the same estimate proves the first
+expansion.
+
+\emph{Entropy expansion.} We claim that, uniformly in $\lambda\in[0,1]$,
+\begin{equation}\label{eq:uniform-entropy}
+ [I(q\lambda)+I(q(1-\lambda))]^2=I(q)^2+2q^2H_2(\lambda)+o(q^2).
+\end{equation}
+Put $R(p)=I(p)/p$ and $\zeta_p=-\Phi^{-1}(p)$. Integration by parts in the
+Gaussian tail gives $0<R(p)-\zeta_p<1/\zeta_p$ and
+$R(p)-\zeta_p\sim1/\zeta_p$; also $dR/d\log(1/p)=R(p)-\zeta_p$ and
+$\zeta_q\sim\sqrt{2L}$. For fixed $\lambda>0$ it follows that
+$\sqrt{2L}\,\lambda\{R(q\lambda)-R(q)\}\to\lambda\log(1/\lambda)$, and for
+all $\lambda\in(0,1]$ this expression lies between $0$ and
+$(\sqrt{2L}/\zeta_q)\lambda\log(1/\lambda)$. So the convergence is uniform
+on $[0,1]$. Adding the two expressions, squaring and using
+$I(q)/q\sim\sqrt{2L}$ gives \eqref{eq:uniform-entropy}. Substituting in
+\eqref{eq:adjacent-reduction} with $q=4h$ gives the second expansion.
+Two further integrations by parts give
+$R(p)^2=2\log(1/p)-\log\log(1/p)-\log(4\pi)+2+o(1)$, which yields the
+displayed form of $I(4h)^2/16$.
+
+\emph{The allocation.} With $m=2\lambda-1$, the derivative of
+$2H_2((1+m)/2)+2m^2$ is $4m-2\operatorname{artanh}m$. Since
+$\operatorname{artanh}(m)/m$ increases from $1$ to $\infty$ on $(0,1)$,
+there is exactly one positive stationary point, given by
+$\operatorname{artanh}m=2m$, equivalently $m=\tanh(2m)$; the centre is a
+strict local minimum and the derivative is negative near $m=1$. So the two
+symmetric points are the global maxima, and uniformity in
+\eqref{eq:uniform-entropy} transfers this to maximising tuples.
+\end{proof}
+
+%======================================================================
+\section{Exposed subcubes and density one eighth}\label{sec:faces}
+
+This section shows that the argument of \cref{sec:cube} works near
+density $2^{-k}$ whenever $k$ equal weights satisfy a stable stop-loss
+inequality, and applies it with $k=3$ via \cref{thm:triadic}.
+
+\begin{theorem}[Transfer; uses \cite{YuLevel}]\label{thm:faces}
+Let $k\ge2$ and $a_0=2^{-k}$. Suppose that some
+$t\in((k-2)/\sqrt k,\sqrt k)$ and $c>0$ satisfy, for all unit vectors $a$,
+\begin{equation}\label{eq:exposed}
+ a_0(\sqrt k-t)-\E(S_a-t)_+\ \ge\ c\,\dist(a,\mathcal E_k)^2 .
+\end{equation}
+Then:
+\begin{enumerate}[label=(\roman*)]
+\item For all $\alpha$ sufficiently close to $a_0$,
+\begin{equation}\label{eq:k-fibres}
+ W(\alpha)=4^{-k}\max\Bigl\{\Bigl\|\sum_{e\in\{-1,1\}^k}e\,p_e\Bigr\|^2
+ +\Bigl(\sum_eI(p_e)\Bigr)^2:\ 0\le p_e\le1,\ \sum_ep_e=2^k\alpha\Bigr\},
+\end{equation}
+and for $0<|\alpha-a_0|$ sufficiently small no set in finite dimension of
+exact density $\alpha$ has $\|b_A\|^2=W(\alpha)$.
+\item With $q=2^kh$, as $h\downarrow0$,
+\begin{align}
+ W(a_0-h)&=k(a_0-h)^2+4^{-k}I(q)^2+o(h^2),\notag\\
+ W(a_0+h)&=ka_0^2+2a_0(k-2)h+4^{-k}I(q)^2+\kappa_kh^2+o(h^2),\label{eq:k-constant}
+\end{align}
+where
+\[
+ \kappa_k=k-4+\max_{\lambda\in\mathcal P_k}\Bigl\{4\sum_{i=1}^k\lambda_i^2+2\Ent(\lambda)\Bigr\}
+\]
+and $4^{-k}I(2^kh)^2=h^2\{2\log(1/h)-\log\log(1/h)+2-\log(4^{k+1}\pi)+o(1)\}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Constants $C_k$ and implied constants may depend on $k$, $t$ and $c$, but
+not on the dimension.
+
+\emph{Localisation.} Put $M=a_0(\sqrt k-t)$ and
+$\Delta=M-\|b_A\|+t\mu(A)$. Testing the direction of $b_A$ splits $\Delta$
+into the stop-loss deficit and a classification loss, as in
+\cref{prop:cubestable}. If $w\in\mathcal E_k$ is nearest to this direction,
+$Q=\{S_w>t\}$ is the $k$-face determined by $w$, because $S_w$ takes the
+values $(k-2j)/\sqrt k$ and $t$ lies strictly between the two largest. Every
+value of $S_w$ is at least
+$\gamma=\min(\sqrt k-t,\ t-(k-2)/\sqrt k)>0$ from $t$, and the argument of
+\cref{prop:cubestable} with \eqref{eq:exposed} gives
+$\mu(A\triangle Q)\le C_k\Delta$; testing $w$ gives the converse bound.
+
+\emph{Exact formula.} Removing mass $h$ from a $k$-face, or adding it to
+the $k$ neighbouring faces, gives centroid norms at least
+$\sqrt k(a_0-h)$ below $a_0$ and $\sqrt ka_0+(k-2)h/\sqrt k$ above it. So a
+maximising sequence at nearby density has $\Delta=O(h)+o(1)$ and lies within
+$O(h)+o(1)$ of a $k$-face. Decompose by the $k$ fixed signs into $2^k$
+fibres: one conditional density is near one and the others near zero. For
+a small enough neighbourhood all minority densities lie in Yu's range, and
+the argument of \cref{cor:fourfibres} gives \eqref{eq:k-fibres}, with
+localised maximising tuples as explained after it.
+
+\emph{Nonattainment.} Suppose a finite-dimensional set $A$ of exact density
+$\alpha\ne a_0$ had $\|b_A\|^2=W(\alpha)$. Its weight is at least that of
+the construction above, so $\Delta(A)=O(h)$ and $A$ is localised near a
+$k$-face. As $2^k\alpha$ is not an integer near $1$, some fibre has
+conditional density strictly between $0$ and $1$, and lying in $(0,a_{\mathrm Y}]$
+after complementation. Yu's strict finite-dimensional inequality makes that
+fibre's centroid strictly shorter than $I(p_e)$, so $\|b_A\|^2$ is strictly
+below the objective of its own tuple, which is at most $W(\alpha)$.
+
+\emph{Next order.} Index the faces of $\{-1,1\}^k$ by the set $J$ of
+negative coordinates. A localised tuple has $p_\varnothing=1-r$ and
+$p_J=x_J$ for $J\ne\varnothing$, with $r,x_J=O(q)$, and the objective is
+\[
+ 4^{-k}\Bigl\{\Bigl\|(1-r)\mathbf1+\sum_{J\ne\varnothing}x_Je_J\Bigr\|^2
+ +\Bigl[I(r)+\sum_{J\ne\varnothing}I(x_J)\Bigr]^2\Bigr\},
+\]
+where $e_J$ is the sign vector of face $J$. Above $a_0$ the constraint is
+$\sum_Jx_J-r=q$. Compare with the tuple that puts mass $q\lambda_i$ on the
+singleton faces $J=\{i\}$, in the proportions of the current singleton
+masses, and nothing elsewhere. With $w=r+\sum_{|J|\ge2}x_J$, the first
+squared norm of the comparison tuple exceeds that of the original by at
+least $4w-O(qw)$: the inner product of $e_J$ with $\mathbf1$ is $k-2|J|$,
+so non-singleton faces and removal lose at least $4$ per unit of mass
+relative to singleton faces. The Gaussian terms change by at most
+$C_kq\sqrt L\,w\sqrt{\log(C_k/w)}$, using
+$\sum_i\lambda_i\sqrt{\log(1/(q\lambda_i))}\le\sqrt{L+\Ent(\lambda)}$ and
+$\Ent(\lambda)\le\log k$. The splitting at $w=q^3$ from \cref{thm:refined}
+shows that the original tuple gains at most $o(q^2)$. Below $a_0$ compare
+with pure removal $r=q$; with $w=\sum_{J\ne\varnothing}x_J$ the first term
+loses at least $4\sum_J|J|x_J-O(qw)\ge4w-O(qw)$ and the same bound applies.
+For the singleton tuple the retained centroid is
+$a_0\mathbf1+h(\mathbf1-2\lambda)$, with squared norm
+$ka_0^2+2a_0(k-2)h+h^2(k-4+4\sum_i\lambda_i^2)$, and the uniform
+expansion $(\sum_iI(q\lambda_i))^2=I(q)^2+2q^2\Ent(\lambda)+o(q^2)$
+follows from the proof of \eqref{eq:uniform-entropy} summed over the $k$
+terms. This gives \eqref{eq:k-constant}; pure removal gives the lower
+expansion, and the Gaussian asymptotic is as before.
+\end{proof}
+
+Hypothesis \eqref{eq:exposed} holds for $k=2$ (with $t=1$) by
+\cref{thm:stoploss}, since $\E(S_a-t)_+=\tfrac12\E(|S_a|-t)_+$, and for
+$k=3$ (with $t=2/\sqrt3$) by \cref{thm:triadic}. For $k=2$,
+\cref{thm:faces} recovers \cref{cor:fourfibres,thm:refined}.
+
+\begin{corollary}[Density one eighth; uses \cite{YuLevel}]\label[corollary]{cor:eighth}
+As $h\downarrow0$,
+\begin{align*}
+ W(\tfrac18-h)&=3(\tfrac18-h)^2+\tfrac1{64}I(8h)^2+o(h^2),\\
+ W(\tfrac18+h)&=\tfrac3{64}+\tfrac h4+\tfrac1{64}I(8h)^2+\kappa_3h^2+o(h^2),
+\end{align*}
+with $\kappa_3=3.0815948865\ldots$. The left and right derivatives of $W$
+at $1/8$ are $3/4$ and $1/4$. Above $1/8$, maximising tuples split the added
+mass among the three neighbouring faces in proportions converging to a
+permutation of $(p_*,(1-p_*)/2,(1-p_*)/2)$, where $p_*=0.9539302689\ldots$
+is the unique root in $(1/3,1)$ of $\log(2p/(1-p))=6p-2$.
+\end{corollary}
+
+\begin{proof}
+Apply \cref{thm:faces} with $k=3$. For the maximisation in $\kappa_3$:
+entropy rules out a zero coordinate at a maximum; the stationarity
+equations make $4\lambda_i-\log\lambda_i$ constant, so there are at most
+two distinct values; two coordinates above $1/4$ give a positive second
+variation when mass is exchanged between them; and the uniform vector is a
+strict local minimum. So a maximiser has the form
+$(p,(1-p)/2,(1-p)/2)$. Along this line the derivative is
+$-2[\log(2p/(1-p))-6p+2]$; the bracket vanishes at $p=1/3$, decreases and
+then increases to $+\infty$ on $(1/3,1)$, so it has exactly one zero there,
+which is a strict maximum. Substitution gives $\kappa_3$.
+\end{proof}
+
+\begin{remark}[Scope of the transfer theorem]\label[remark]{rem:scope}
+Hypothesis \eqref{eq:exposed} requires $k$ equal weights to be the unique
+maximisers of the stop-loss transform at some threshold. Among
+equal-weight vectors, numerical evaluation (\cref{sec:computations}) shows
+that two equal weights win for $t$ between $2-\sqrt2$ and $2\sqrt2-\sqrt3$,
+three for $t$ up to $2\sqrt3-2\approx1.464$, four up to about $1.72$, and that for
+$k=5$ and $k=6$ another equal-weight vector or the Gaussian always does
+strictly better on the whole admissible interval. On an evaluation grid of
+step below $5\cdot10^{-4}$ the margin is at least $10^{-3}$; since each
+stop-loss transform is $1$-Lipschitz in $t$, the difference of two of them is
+$2$-Lipschitz, so the margin stays positive between grid points (up to the
+accuracy of the 30-digit evaluation). So the hypothesis fails
+for $k=5,6$, and \cref{thm:faces} is expected to apply only for
+$k\in\{2,3,4\}$. The case $k=4$ is Fang and Huang's
+Conjecture~3.1 \cite{FangHuang} (with stability), which would settle
+density $1/16$.
+\end{remark}
+
+\begin{remark}[The Potts connection]\label[remark]{rem:potts}
+The maximisation defining $\kappa_k$ is, up to the factor $-2$ and the
+additive constant $k-4$, the zero-field Curie--Weiss--Potts free-energy
+minimisation at inverse temperature $\beta=4$: in the convention of
+Gandolfo, Ruiz and Wouts \cite[equation~(2.3)]{Potts} the free energy is
+$\sum_i\lambda_i\log\lambda_i-\tfrac\beta2\sum_i\lambda_i^2$. At this
+temperature, for $k=2$ and $k=3$, the minimisers have one large coordinate
+(\cref{thm:refined,cor:eighth}), which is why the added mass prefers one
+neighbouring face. We use only the elementary
+analysis given above for $k=2,3$.
+\end{remark}
+
+%======================================================================
+\section{Computations}\label{sec:computations}
+
+This section describes the accompanying scripts and what each one checks.
+The proofs do not depend on them.
+
+\begin{itemize}[leftmargin=1.5em]
+\item \texttt{verify.py} (standard library) checks \cref{thm:stoploss} at
+ $t\in\{1/\sqrt2,3/4,1,201/200\}$ and \cref{thm:triadic}'s bound at
+ $t=2/\sqrt3$, with exact equality cases, for all 1{,}000 nondecreasing
+ integer weight tuples with entries $1,\ldots,4$ and length at most $10$,
+ using integer arithmetic and signs in $\mathbb Q(\sqrt2)$. It also encloses
+ $\E\min(\|S\|,1)$ for 923 tuples of integer vectors in $\R^2$.
+\item \texttt{cube\_census.py} enumerates all $65{,}536$ subsets of
+ $\{-1,1\}^4$: the maximal weight is $32/256$ at density $1/4$, attained
+ exactly by the $24$ two-faces, and $12/256$ at density $1/8$, attained
+ exactly by the $32$ three-faces (one-dimensional subcubes). The supporting
+ deficits in this census are evaluated in floating point with tolerance
+ $10^{-14}$. It recomputes $m_*$, $\lambda_*$,
+ $\kappa_2$, $p_*$, $\kappa_3$ and the Gaussian constants to 80 digits.
+\item \texttt{verify\_asymptotic.py} (SciPy) evaluates the reduced
+ one-parameter problems of \cref{thm:refined,cor:eighth} for
+ $q=10^{-3},\ldots,10^{-200}$; the corrections approach $\kappa_2$ and
+ $\kappa_3$ slowly, with error of order $1/\log(1/q)$. This illustrates
+ the limit; it does not test the reductions.
+\item \texttt{check\_extensions.py} (mpmath) evaluates the margins in the
+ proof of \cref{thm:stoploss}, the endpoints in \cref{prop:interval}, the
+ constants of \cref{cor:tv,rem:explicit,prop:cubestable}, the evidence for
+ \cref{conj:interval} and the equal-weight envelope in \cref{rem:scope}.
+ For \cref{conj:interval} it checks all nondecreasing integer tuples with
+ entries $1,\ldots,5$ and length at most $9$ (2{,}001 tuples) at 23
+ thresholds inside $(2-\sqrt2,2\sqrt2-\sqrt3)$, and 3{,}000 seeded random
+ unit vectors of length at most $12$; no vector exceeds the pair.
+\end{itemize}
+Numerical results that are not exact (the envelope, the random vectors and
+the asymptotic optimiser) carry a declared tolerance and are evidence, not
+proof.
+
+%======================================================================
+\section{Open problems}\label{sec:open}
+
+This section lists the questions that the paper leaves open.
+
+\begin{conjecture}\label[conjecture]{conj:interval}
+For every $t\in[2-\sqrt2,\,2\sqrt2-\sqrt3]$ and every unit vector $a$,
+$\E(|S_a|-t)_+\le(\sqrt2-t)/2$. By \cref{prop:interval} this would be the
+largest such interval. By convexity in $t$ it suffices to prove the two
+endpoint cases, at each of which two different weight vectors tie.
+\end{conjecture}
+
+\begin{enumerate}[leftmargin=2em]
+\item \emph{Density $1/16$.} Prove Fang and Huang's Conjecture~3.1
+ \cite{FangHuang}, ideally with the stability required in \eqref{eq:exposed};
+ by \cref{thm:faces} this would give the local profile near $1/16$.
+ A three-harmonic analogue of \eqref{eq:FHmajorant} cannot work: matching
+ the contact conditions at $0,2,4$ and the Gaussian limit leads to
+ incompatible constraints on the coefficients.
+\item \emph{Independence from Yu's theorem.} Find a proof of
+ \cref{cor:fourfibres} or \cref{thm:refined} that avoids
+ \cite[Theorem~5]{YuLevel}, for example a direct stop-loss bound for the
+ small fibres at densities of order $h$.
+\item \emph{Effective constants.} Make the error term in \cref{thm:cusp}
+ effective, and make the neighbourhoods in
+ \cref{cor:fourfibres,thm:faces} and the constants $c_3,\eta$ in
+ \cref{thm:triadic} explicit.
+\item \emph{Allocation for near-optimal sets.} Show that every set near
+ density $1/4+h$ whose weight is within $o(h^2)$ of $W$ splits its added
+ mass between two neighbouring faces in proportions near
+ $\lambda_*:1-\lambda_*$.
+\end{enumerate}
+
+\section*{Statement on the use of AI}
+This paper was prepared with substantial assistance from AI systems, which
+were used to develop and check proofs, run the computations and draft the
+text. The results were checked by independent AI-assisted proof audits
+and by the computations described in \cref{sec:computations}. The paper has
+not been peer reviewed.
+
+\begin{thebibliography}{99}\small
+\bibitem{AhlswedeKatona}
+R. Ahlswede and G. O. H. Katona (1977). Contributions to the geometry of
+Hamming spaces. \emph{Discrete Mathematics}, 17(1), 1--22.
+\href{https://doi.org/10.1016/0012-365X(77)90017-6}{doi:10.1016/0012-365X(77)90017-6}.
+\bibitem{AlthoferSillke}
+I. Alth\"ofer and T. Sillke (1992). An ``average distance'' inequality for
+large subsets of the cube. \emph{Journal of Combinatorial Theory, Series B},
+56(2), 296--301.
+\href{https://doi.org/10.1016/0095-8956(92)90024-R}{doi:10.1016/0095-8956(92)90024-R}.
+\bibitem{DDS}
+A. De, I. Diakonikolas and R. A. Servedio (2016). A robust Khintchine
+inequality, and algorithms for computing optimal constants in Fourier
+analysis and high-dimensional geometry. \emph{SIAM Journal on Discrete
+Mathematics}, 30(2), 1058--1094.
+\href{https://doi.org/10.1137/130919143}{doi:10.1137/130919143}.
+\bibitem{ENT}
+A. Eskenazis, P. Nayar and T. Tkocz (2024). Resilience of cube slicing in
+$\ell_p$. \emph{Duke Mathematical Journal}, 173(17), 3377--3412.
+\href{https://doi.org/10.1215/00127094-2024-0004}{doi:10.1215/00127094-2024-0004}.
+\bibitem{FangHuang}
+Y. Fang and H. Huang (2026). Average pairwise Hamming distance of a subset
+in a hypercube. \emph{arXiv}:2610.40486v1 [math.CO], 29 October 2026.
+\url{https://arxiv.org/abs/2610.40486}.
+\bibitem{FangWang}
+X. Fang and T. Wang (2026). A two-regime Khintchine inequality and an
+improved bound on the degree-1 Fourier weight for linear threshold
+functions. \emph{arXiv}:2608.27908v2 [math.PR], 1 November 2026.
+\url{https://arxiv.org/abs/2608.27908}.
+\bibitem{FuWeiYeung}
+F.-W. Fu, V. K. Wei and R. W. Yeung (2001). On the minimum average distance
+of binary codes: linear programming approach. \emph{Discrete Applied
+Mathematics}, 111(3), 263--281.
+\href{https://doi.org/10.1016/S0166-218X(00)00284-5}{doi:10.1016/S0166-218X(00)00284-5}.
+\bibitem{Potts}
+D. Gandolfo, J. Ruiz and M. Wouts (2010). Limit theorems and coexistence
+probabilities for the Curie--Weiss Potts model with an external field.
+\emph{Stochastic Processes and their Applications}, 120(1), 84--104.
+\href{https://doi.org/10.1016/j.spa.2009.10.011}{doi:10.1016/j.spa.2009.10.011}.
+\bibitem{Haagerup}
+U. Haagerup (1981). The best constants in the Khintchine inequality.
+\emph{Studia Mathematica}, 70(3), 231--283.
+\href{https://doi.org/10.4064/sm-70-3-231-283}{doi:10.4064/sm-70-3-231-283}.
+\bibitem{HP}
+L. Hollom and J. Portier (2025). Tight anti-concentration of Rademacher
+sums. \emph{Random Structures \& Algorithms}, 67(1).
+\href{https://doi.org/10.1002/rsa.70024}{doi:10.1002/rsa.70024}.
+Preprint arXiv:2306.07811 (theorem numbers refer to this version).
+\bibitem{Kontorovich}
+A. Kontorovich (2024). Expectation comparison inequality for concave
+function of symmetric random variables. \emph{MathOverflow}, question
+478477, 9 September 2024. \url{https://mathoverflow.net/q/478477}.
+\bibitem{KontorovichTV}
+A. Kontorovich (2024). On the tensorization of the variational distance.
+\emph{arXiv}:2409.10368v2 [math.PR], 2 October 2024.
+\url{https://arxiv.org/abs/2409.10368}.
+\bibitem{Lowther}
+G. Lowther (2024). Answer to ``Expectation comparison inequality for concave
+function of symmetric random variables''. \emph{MathOverflow}, answer
+478525, 9 September 2024. \url{https://mathoverflow.net/a/478525}.
+\bibitem{Melbourne}
+J. Melbourne and C. Roberto (2022). Quantitative form of Ball's cube slicing
+in $\R^n$ and equality cases in the min-entropy power inequality.
+\emph{Proceedings of the American Mathematical Society}, 150(8), 3595--3611.
+\href{https://doi.org/10.1090/proc/15944}{doi:10.1090/proc/15944}.
+\bibitem{Szarek}
+S. J. Szarek (1976). On the best constants in the Khinchin inequality.
+\emph{Studia Mathematica}, 58(2), 197--208.
+\href{https://doi.org/10.4064/sm-58-2-197-208}{doi:10.4064/sm-58-2-197-208}.
+\bibitem{YuLevel}
+L. Yu (2026). On average distance, level-1 Fourier weight, and Chang's
+lemma. \emph{arXiv}:2504.02593v2 [math.CO], 25 September 2026.
+\url{https://arxiv.org/abs/2504.02593v2}.
+\end{thebibliography}
+\end{document}

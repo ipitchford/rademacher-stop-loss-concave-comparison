@@ -1,0 +1,79 @@
+{
+  "A_theorem_3_1_margins": {
+    "gap_at_t1": "0.0027013138255995215506",
+    "interior_coefficient_interval": "0.0467264223163",
+    "interior_coefficient_t1": "0.0580582617584",
+    "residual_at_201_200": "0.0002013138256",
+    "residual_with_quoted_decimals": "0.000146558704453",
+    "stability_coefficient": "0.0410533905933"
+  },
+  "B_interval_endpoints": {
+    "lower_2_minus_sqrt2": "0.5857864376269049512",
+    "upper_2sqrt2_minus_sqrt3": "1.0963763171773128041"
+  },
+  "C_tensorization_constant": {
+    "improved": "0.1967346701",
+    "previous": "0.1798575036"
+  },
+  "D_hilbert_stability_constants": {
+    "ENT_published_8e-5": {
+      "K": "449312.0687",
+      "c0": "8.0e-5",
+      "c_H": "1.11281e-8"
+    },
+    "Fang_Wang_preprint_1_20": {
+      "K": "766.8225099",
+      "c0": "0.05",
+      "c_H": "6.52041e-6"
+    }
+  },
+  "E_localisation": {
+    "C": "2.41421356237",
+    "one_over_c": "46632.24543"
+  },
+  "F_conjecture_evidence": {
+    "integer_tuples": 2001,
+    "largest_integer_excess": "-0.0043248527",
+    "largest_random_excess": "-1.812e-06",
+    "random_vectors": 3000,
+    "thresholds": 23
+  },
+  "G_equal_coefficient_envelope": {
+    "k5_min_margin": "0.00100893",
+    "k6_min_margin": "0.00189673",
+    "kmax": 120,
+    "segments": [
+      [
+        1,
+        "0.55",
+        "0.585"
+      ],
+      [
+        2,
+        "0.586",
+        "1.096"
+      ],
+      [
+        3,
+        "1.097",
+        "1.464"
+      ],
+      [
+        4,
+        "1.465",
+        "1.722"
+      ],
+      [
+        13,
+        "1.723",
+        "1.732"
+      ],
+      [
+        "G",
+        "1.733",
+        "2.0"
+      ]
+    ]
+  },
+  "failures": []
+}

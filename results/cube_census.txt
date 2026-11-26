@@ -1,0 +1,21 @@
+All 65,536 subsets of the four-dimensional sign cube verified.
+Supporting deficit nonnegative within 1e-14 floating tolerance.
+Exact quarter-density maximum numerator: 32 over denominator 256.
+Exact maximisers: 24 two-coordinate faces.
+Exact eighth-density maximum numerator: 12 over denominator 256.
+Exact eighth-density maximisers: 32 one-dimensional faces.
+Both supporting deficits numerically verified.
+Exact weight numerators by mass: {0: 0, 1: 4, 2: 12, 3: 20, 4: 32, 5: 36, 6: 44, 7: 52, 8: 64, 9: 52, 10: 44, 11: 36, 12: 32, 13: 20, 14: 12, 15: 4, 16: 0}
+Profile constants calculated with 80 decimal digits of precision.
+m_star = 0.957504024077268740676501530502407825286681
+lambda_star = 0.978752012038634370338250765251203912643341
+kappa_2 = 2.03934213597373836685258941976242334244713
+p_star = 0.953930268877325895117342826682214437265241
+each_minor_fraction = 0.0230348655613370524413285866588927813673794
+kappa_3 = 3.08159488649630417270291204102670337269552
+2-log(64*pi) = -3.3036129692090720306468200801021181201003
+2-log(256*pi) = -4.6899073303289626494812843230184712562513
+Stationarity and equivalent formula residuals are below 1e-70.
+Both allocation second derivatives are negative.
+Both constants exceed their uniform and endpoint values.
+All high-precision constant checks passed.

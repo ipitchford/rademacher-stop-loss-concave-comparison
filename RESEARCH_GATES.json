@@ -1,0 +1,288 @@
+{
+ "schemaVersion": "1.0",
+ "provenance": "Compiled 26 November 2026 for 0.1.0 from the dated searches of the lead and the internal AI-assisted review (24-25 November 2026), the source reading record, the corpus overlap check, refs.bib, REVIEW_SUMMARY.md and the paper (Sections 1 and 10). It records scrutiny performed, not historical priority.",
+ "contributionMap": [
+  {
+   "claim": "E(|S|-t)+ <= (sqrt2 - t)/2 for unit Rademacher sums and t in [1/sqrt2, 201/200], equality only for two equal weights, quadratic stability",
+   "unit": "statement",
+   "paperLocation": "Theorem 3.1",
+   "searches": [
+    {
+     "date": "2026-11-24",
+     "corpus": "web, arXiv and MathOverflow searches by the lead and the internal review; the citing literature of Lowther, Kontorovich, Yu and Fang-Huang; the Evidence Press corpus (site papers/ and the corpus list)",
+     "query": "Rademacher sums with stop-loss / mean excess / E(|S|-t)+; \"concave comparison\" with square function and constant 2; Khintchine with truncation; total variation tensorization constant; minimum average distance codes / first-level Fourier weight near densities 1/4, 1/8"
+    },
+    {
+     "date": "2026-11-25",
+     "corpus": "the cited works, obtained and read: Yu arXiv:2504.02593v2, Fang-Huang arXiv:2610.40486v1, De-Diakonikolas-Servedio, Eskenazis-Nayar-Tkocz, Fang-Wang arXiv:2608.27908v2, Melbourne-Roberto, Hollom-Portier arXiv:2306.07811v1, Kontorovich arXiv:2409.10368v2, MathOverflow 478477 and 478525, Haagerup (1981), Szarek (1976)",
+     "query": "Yu Theorems 4 and 5 and Problem 2; Fang-Huang Lemma 2.4, majorant and Conjecture 3.1; Kontorovich Section 2.3; Lowther reduction; Haagerup Lemmas 1.3-1.4; Szarek constant"
+    }
+   ],
+   "closestPriorWork": "Lowther (MathOverflow answer 478525) proposed the t = 1 bound and proved constant 2.187",
+   "verdict": "new-in-bounded-search",
+   "verdictNote": "answers the open question in the thread"
+  },
+  {
+   "claim": "Kontorovich concave comparison with sharp constant 2, also in Hilbert space, with linear stability",
+   "unit": "statement",
+   "paperLocation": "Corollary 4.1, Theorem 4.4, Theorem 5.1",
+   "searches": [
+    {
+     "date": "2026-11-24",
+     "corpus": "web, arXiv and MathOverflow searches by the lead and the internal review; the citing literature of Lowther, Kontorovich, Yu and Fang-Huang; the Evidence Press corpus (site papers/ and the corpus list)",
+     "query": "Rademacher sums with stop-loss / mean excess / E(|S|-t)+; \"concave comparison\" with square function and constant 2; Khintchine with truncation; total variation tensorization constant; minimum average distance codes / first-level Fourier weight near densities 1/4, 1/8"
+    },
+    {
+     "date": "2026-11-25",
+     "corpus": "the cited works, obtained and read: Yu arXiv:2504.02593v2, Fang-Huang arXiv:2610.40486v1, De-Diakonikolas-Servedio, Eskenazis-Nayar-Tkocz, Fang-Wang arXiv:2608.27908v2, Melbourne-Roberto, Hollom-Portier arXiv:2306.07811v1, Kontorovich arXiv:2409.10368v2, MathOverflow 478477 and 478525, Haagerup (1981), Szarek (1976)",
+     "query": "Yu Theorems 4 and 5 and Problem 2; Fang-Huang Lemma 2.4, majorant and Conjecture 3.1; Kontorovich Section 2.3; Lowther reduction; Haagerup Lemmas 1.3-1.4; Szarek constant"
+    }
+   ],
+   "closestPriorWork": "Kontorovich (question 478477), Lowther reduction",
+   "verdict": "new-in-bounded-search",
+   "verdictNote": "reduction credited to Lowther"
+  },
+  {
+   "claim": "Total variation tensorization constant 0.1798 -> (1 - e^{-1/2})/2",
+   "unit": "statement",
+   "paperLocation": "Corollary 4.5",
+   "searches": [
+    {
+     "date": "2026-11-24",
+     "corpus": "web, arXiv and MathOverflow searches by the lead and the internal review; the citing literature of Lowther, Kontorovich, Yu and Fang-Huang; the Evidence Press corpus (site papers/ and the corpus list)",
+     "query": "Rademacher sums with stop-loss / mean excess / E(|S|-t)+; \"concave comparison\" with square function and constant 2; Khintchine with truncation; total variation tensorization constant; minimum average distance codes / first-level Fourier weight near densities 1/4, 1/8"
+    },
+    {
+     "date": "2026-11-25",
+     "corpus": "the cited works, obtained and read: Yu arXiv:2504.02593v2, Fang-Huang arXiv:2610.40486v1, De-Diakonikolas-Servedio, Eskenazis-Nayar-Tkocz, Fang-Wang arXiv:2608.27908v2, Melbourne-Roberto, Hollom-Portier arXiv:2306.07811v1, Kontorovich arXiv:2409.10368v2, MathOverflow 478477 and 478525, Haagerup (1981), Szarek (1976)",
+     "query": "Yu Theorems 4 and 5 and Problem 2; Fang-Huang Lemma 2.4, majorant and Conjecture 3.1; Kontorovich Section 2.3; Lowther reduction; Haagerup Lemmas 1.3-1.4; Szarek constant"
+    }
+   ],
+   "closestPriorWork": "Kontorovich arXiv:2409.10368v2",
+   "verdict": "new-in-bounded-search",
+   "verdictNote": "direct consequence of the sharp constant"
+  },
+  {
+   "claim": "Fang-Huang capped three-weight inequality without the cap, with stability",
+   "unit": "statement",
+   "paperLocation": "Theorem 6.1",
+   "searches": [
+    {
+     "date": "2026-11-24",
+     "corpus": "web, arXiv and MathOverflow searches by the lead and the internal review; the citing literature of Lowther, Kontorovich, Yu and Fang-Huang; the Evidence Press corpus (site papers/ and the corpus list)",
+     "query": "Rademacher sums with stop-loss / mean excess / E(|S|-t)+; \"concave comparison\" with square function and constant 2; Khintchine with truncation; total variation tensorization constant; minimum average distance codes / first-level Fourier weight near densities 1/4, 1/8"
+    },
+    {
+     "date": "2026-11-25",
+     "corpus": "the cited works, obtained and read: Yu arXiv:2504.02593v2, Fang-Huang arXiv:2610.40486v1, De-Diakonikolas-Servedio, Eskenazis-Nayar-Tkocz, Fang-Wang arXiv:2608.27908v2, Melbourne-Roberto, Hollom-Portier arXiv:2306.07811v1, Kontorovich arXiv:2409.10368v2, MathOverflow 478477 and 478525, Haagerup (1981), Szarek (1976)",
+     "query": "Yu Theorems 4 and 5 and Problem 2; Fang-Huang Lemma 2.4, majorant and Conjecture 3.1; Kontorovich Section 2.3; Lowther reduction; Haagerup Lemmas 1.3-1.4; Szarek constant"
+    }
+   ],
+   "closestPriorWork": "Fang-Huang Lemma 2.4 (capped)",
+   "verdict": "partially-known-cited",
+   "verdictNote": "capped version credited"
+  },
+  {
+   "claim": "Local profile of maximal first-level weight near density 1/4: two-faces and (2 + o(1)) h^2 log(1/h)",
+   "unit": "statement",
+   "paperLocation": "Proposition 7.1, Theorem 7.2",
+   "searches": [
+    {
+     "date": "2026-11-24",
+     "corpus": "web, arXiv and MathOverflow searches by the lead and the internal review; the citing literature of Lowther, Kontorovich, Yu and Fang-Huang; the Evidence Press corpus (site papers/ and the corpus list)",
+     "query": "Rademacher sums with stop-loss / mean excess / E(|S|-t)+; \"concave comparison\" with square function and constant 2; Khintchine with truncation; total variation tensorization constant; minimum average distance codes / first-level Fourier weight near densities 1/4, 1/8"
+    },
+    {
+     "date": "2026-11-25",
+     "corpus": "the cited works, obtained and read: Yu arXiv:2504.02593v2, Fang-Huang arXiv:2610.40486v1, De-Diakonikolas-Servedio, Eskenazis-Nayar-Tkocz, Fang-Wang arXiv:2608.27908v2, Melbourne-Roberto, Hollom-Portier arXiv:2306.07811v1, Kontorovich arXiv:2409.10368v2, MathOverflow 478477 and 478525, Haagerup (1981), Szarek (1976)",
+     "query": "Yu Theorems 4 and 5 and Problem 2; Fang-Huang Lemma 2.4, majorant and Conjecture 3.1; Kontorovich Section 2.3; Lowther reduction; Haagerup Lemmas 1.3-1.4; Szarek constant"
+    }
+   ],
+   "closestPriorWork": "Althofer-Sillke and Fu-Wei-Yeung (value at 1/4); Yu Theorem 5 (small densities)",
+   "verdict": "new-in-bounded-search",
+   "verdictNote": "value at 1/4 known and credited"
+  },
+  {
+   "claim": "Assuming Yu Theorem 5: exact formula near 1/4, next-order terms, 0.979:0.021 split; analogue near 1/8",
+   "unit": "statement",
+   "paperLocation": "Corollary 7.3, Theorem 7.4, Theorem 8.1, Corollary 8.2",
+   "searches": [
+    {
+     "date": "2026-11-24",
+     "corpus": "web, arXiv and MathOverflow searches by the lead and the internal review; the citing literature of Lowther, Kontorovich, Yu and Fang-Huang; the Evidence Press corpus (site papers/ and the corpus list)",
+     "query": "Rademacher sums with stop-loss / mean excess / E(|S|-t)+; \"concave comparison\" with square function and constant 2; Khintchine with truncation; total variation tensorization constant; minimum average distance codes / first-level Fourier weight near densities 1/4, 1/8"
+    },
+    {
+     "date": "2026-11-25",
+     "corpus": "the cited works, obtained and read: Yu arXiv:2504.02593v2, Fang-Huang arXiv:2610.40486v1, De-Diakonikolas-Servedio, Eskenazis-Nayar-Tkocz, Fang-Wang arXiv:2608.27908v2, Melbourne-Roberto, Hollom-Portier arXiv:2306.07811v1, Kontorovich arXiv:2409.10368v2, MathOverflow 478477 and 478525, Haagerup (1981), Szarek (1976)",
+     "query": "Yu Theorems 4 and 5 and Problem 2; Fang-Huang Lemma 2.4, majorant and Conjecture 3.1; Kontorovich Section 2.3; Lowther reduction; Haagerup Lemmas 1.3-1.4; Szarek constant"
+    }
+   ],
+   "closestPriorWork": "Yu arXiv:2504.02593v2; Fang-Huang (density 1/8 value)",
+   "verdict": "new-in-bounded-search",
+   "verdictNote": "conditional on an unrefereed preprint, stated as such"
+  },
+  {
+   "claim": "Method: quadratic majorant with a cosine correction whose expectation factorises over coins; transfer of stable stop-loss inequalities to local cube profiles via a Gaussian construction",
+   "unit": "method",
+   "paperLocation": "Sections 3, 6, 8",
+   "searches": [
+    {
+     "date": "2026-11-24",
+     "corpus": "web, arXiv and MathOverflow searches by the lead and the internal review; the citing literature of Lowther, Kontorovich, Yu and Fang-Huang; the Evidence Press corpus (site papers/ and the corpus list)",
+     "query": "Rademacher sums with stop-loss / mean excess / E(|S|-t)+; \"concave comparison\" with square function and constant 2; Khintchine with truncation; total variation tensorization constant; minimum average distance codes / first-level Fourier weight near densities 1/4, 1/8"
+    },
+    {
+     "date": "2026-11-25",
+     "corpus": "the cited works, obtained and read: Yu arXiv:2504.02593v2, Fang-Huang arXiv:2610.40486v1, De-Diakonikolas-Servedio, Eskenazis-Nayar-Tkocz, Fang-Wang arXiv:2608.27908v2, Melbourne-Roberto, Hollom-Portier arXiv:2306.07811v1, Kontorovich arXiv:2409.10368v2, MathOverflow 478477 and 478525, Haagerup (1981), Szarek (1976)",
+     "query": "Yu Theorems 4 and 5 and Problem 2; Fang-Huang Lemma 2.4, majorant and Conjecture 3.1; Kontorovich Section 2.3; Lowther reduction; Haagerup Lemmas 1.3-1.4; Szarek constant"
+    }
+   ],
+   "closestPriorWork": "Fang-Huang use a cosine-corrected majorant",
+   "verdict": "partially-known-cited",
+   "verdictNote": "majorant idea credited to Fang-Huang; transfer principle not found"
+  }
+ ],
+ "sourcesReadInFull": [
+  {
+   "citation": "Yu, L. (2026), On average distance, level-1 Fourier weight, and Chang's lemma, arXiv:2504.02593v2",
+   "usedFor": "Theorem 5 (assumed for finer cube results), Theorem 4, context",
+   "readWhat": "whole paper",
+   "date": "2026-11-25",
+   "evidenceLocator": "https://arxiv.org/abs/2504.02593v2"
+  },
+  {
+   "citation": "Fang, Y. and Huang, H. (2026), Average pairwise Hamming distance of a subset in a hypercube, arXiv:2610.40486v1",
+   "usedFor": "Lemma 2.4, majorant, density 1/8, Conjecture 3.1",
+   "readWhat": "whole paper",
+   "date": "2026-11-25",
+   "evidenceLocator": "https://arxiv.org/abs/2610.40486"
+  },
+  {
+   "citation": "Kontorovich, A. (2024), On the tensorization of the variational distance, arXiv:2409.10368v2",
+   "usedFor": "TV application",
+   "readWhat": "whole paper",
+   "date": "2026-11-25",
+   "evidenceLocator": "https://arxiv.org/abs/2409.10368"
+  },
+  {
+   "citation": "Kontorovich, A. and Lowther, G. (2024), MathOverflow question 478477 and answer 478525",
+   "usedFor": "question, reduction, proposed bound",
+   "readWhat": "whole thread",
+   "date": "2026-11-25",
+   "evidenceLocator": "https://mathoverflow.net/q/478477"
+  },
+  {
+   "citation": "Haagerup, U. (1981), The best constants in the Khintchine inequality, Studia Math. 70(3)",
+   "usedFor": "Lemmas 1.3-1.4, Theorem 1.1",
+   "readWhat": "cited lemmas and theorem (scan)",
+   "date": "2026-11-25",
+   "evidenceLocator": "https://doi.org/10.4064/sm-70-3-231-283"
+  },
+  {
+   "citation": "Szarek, S. J. (1976), On the best constants in the Khinchin inequality, Studia Math. 58(2)",
+   "usedFor": "constant 1/sqrt2",
+   "readWhat": "main theorem (scan)",
+   "date": "2026-11-25",
+   "evidenceLocator": "https://doi.org/10.4064/sm-58-2-197-208"
+  },
+  {
+   "citation": "Eskenazis, A., Nayar, P. and Tkocz, T. (2024), Resilience of cube slicing in l_p, Duke Math. J. 173(17)",
+   "usedFor": "robust Khintchine constant",
+   "readWhat": "relevant sections",
+   "date": "2026-11-25",
+   "evidenceLocator": "https://doi.org/10.1215/00127094-2024-0004"
+  },
+  {
+   "citation": "De, A., Diakonikolas, I. and Servedio, R. A. (2016), A robust Khintchine inequality, SIAM J. Discrete Math. 30(2)",
+   "usedFor": "robust Khintchine",
+   "readWhat": "relevant sections",
+   "date": "2026-11-25",
+   "evidenceLocator": "https://doi.org/10.1137/130919143"
+  }
+ ],
+ "limitationTriage": [
+  {
+   "limitation": "Threshold interval proved only on [1/sqrt2, 201/200]",
+   "closingQuestion": "Does the bound hold on [2 - sqrt2, 2sqrt2 - sqrt3]?",
+   "triedOrSearched": "attempted in the revision round; linear combinations of known sharp inequalities cannot pass 1/sqrt2; stated as Conjecture 10.1 with numerical evidence",
+   "estimatedCost": "new research",
+   "cheap": false,
+   "decision": "OPEN",
+   "reasonOpen": "two-extremiser endpoint problems",
+   "whyNotClosedNow": "two-extremiser endpoint problems"
+  },
+  {
+   "limitation": "Cube results local with non-explicit neighbourhoods",
+   "closingQuestion": "Can the neighbourhoods and constants be made effective?",
+   "triedOrSearched": "not attempted beyond Proposition 7.1 constants",
+   "estimatedCost": "new research",
+   "cheap": false,
+   "decision": "OPEN",
+   "reasonOpen": "inherited from Yu threshold and compactness",
+   "whyNotClosedNow": "inherited from Yu threshold and compactness"
+  },
+  {
+   "limitation": "Finer cube results depend on an unrefereed preprint",
+   "closingQuestion": "Can Corollary 7.3 / Theorem 7.4 avoid Yu Theorem 5?",
+   "triedOrSearched": "not attempted",
+   "estimatedCost": "new research",
+   "cheap": false,
+   "decision": "OPEN",
+   "reasonOpen": "open problem 2",
+   "whyNotClosedNow": "open problem 2"
+  },
+  {
+   "limitation": "Density 1/16",
+   "closingQuestion": "Does Fang-Huang Conjecture 3.1 hold with stability?",
+   "triedOrSearched": "three-harmonic majorant shown to fail",
+   "estimatedCost": "weeks",
+   "cheap": false,
+   "decision": "OPEN",
+   "reasonOpen": "open problem 1",
+   "whyNotClosedNow": "open problem 1"
+  },
+  {
+   "limitation": "Scripts used bare assert",
+   "closingQuestion": "Do the checks survive python -O?",
+   "triedOrSearched": "fixed; negative control exits 1 under -O",
+   "estimatedCost": "hours",
+   "cheap": true,
+   "decision": "CLOSED",
+   "reasonOpen": "",
+   "whyNotClosedNow": ""
+  },
+  {
+   "limitation": "Wider stop-loss and anti-concentration literature not discussed",
+   "closingQuestion": "Would it change attribution?",
+   "triedOrSearched": "not read in full; the paper does not rely on it",
+   "estimatedCost": "library time",
+   "cheap": false,
+   "decision": "OPEN",
+   "reasonOpen": "recorded; priority claimed only within the searches",
+   "whyNotClosedNow": "recorded; priority claimed only within the searches"
+  }
+ ],
+ "extensionScout": {
+  "by": "the internal review and the lead",
+  "date": "2026-11-24",
+  "proposals": [
+   "TV tensorization constant",
+   "truncated mean",
+   "explicit Hilbert stability constants",
+   "necessity half of the interval",
+   "scope of the transfer theorem",
+   "Conjecture 10.1",
+   "density 1/16"
+  ],
+  "actions": [
+   "done: Corollary 4.5",
+   "done: Corollary 4.3",
+   "done: Remark 5.2",
+   "done: Proposition 3.3",
+   "done: Remark 8.3",
+   "attempted, not landed: stated as a conjecture",
+   "not attempted: open problem"
+  ]
+ }
+}

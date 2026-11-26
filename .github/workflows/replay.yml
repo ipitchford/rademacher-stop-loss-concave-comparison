@@ -1,0 +1,58 @@
+# SPDX-License-Identifier: MIT
+name: Replay
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+env:
+  PYTHONDONTWRITEBYTECODE: "1"
+jobs:
+  replay:
+    name: Manifest; three quick scripts under python -O; output comparison; negative control
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check MANIFEST.sha256
+        run: sha256sum -c MANIFEST.sha256
+      - name: Install pinned packages
+        run: python3 -m pip install -r requirements.txt
+      - name: Run the quick scripts in a fresh copy and compare with the shipped outputs
+        run: |
+          D="$RUNNER_TEMP/pkg"; mkdir -p "$D/out"; cp -R code results "$D/"; cd "$D"
+          python3 -I -c 'import sys, mpmath, scipy, numpy; print(sys.version, mpmath.__version__, scipy.__version__, numpy.__version__)'
+          set -e
+          python3 -I -B -O code/verify.py > out/verification.txt
+          python3 -I -B -O code/cube_census.py > out/cube_census.txt
+          python3 -I -B -O code/verify_asymptotic.py > out/asymptotic.txt
+          diff results/verification.txt out/verification.txt
+          diff results/cube_census.txt out/cube_census.txt
+          python3 -I - <<'PY'
+          import re, sys
+          # asymptotic.txt is floating point (SciPy): each number may differ by one unit in its last printed
+          # decimal or by relative 1e-8, whichever is larger; all other text is compared exactly.
+          num = re.compile(r'-?\d+(?:\.\d+)?(?:e[-+]?\d+)?')
+          a = open('results/asymptotic.txt').read().splitlines(); b = open('out/asymptotic.txt').read().splitlines()
+          if len(a) != len(b): sys.exit('line count differs')
+          for x, y in zip(a, b):
+              if num.sub('#', x) != num.sub('#', y): sys.exit(f'text differs: {x!r} vs {y!r}')
+              for p, q in zip(num.findall(x), num.findall(y)):
+                  P, Q = float(p), float(q)
+                  ulp = 10.0 ** -len(p.split('e')[0].split('.')[1]) if '.' in p else 0.0
+                  if p != q and abs(P - Q) > max(1e-8 * abs(P), ulp) * (1 + 1e-9):
+                      sys.exit(f'number differs beyond tolerance: {p} vs {q}')
+          print('asymptotic.txt within declared tolerance')
+          PY
+          echo "outputs match the shipped results under the declared policy"
+      - name: Negative control (a changed census expectation must fail under python -O)
+        run: |
+          N="$RUNNER_TEMP/neg1"; mkdir -p "$N"; cp -R code "$N/"; cd "$N"
+          sed -i 's/masses\[4\] *== *32/masses[4] == 33/' code/cube_census.py
+          grep -q 'masses\[4\] == 33' code/cube_census.py
+          if python3 -I -B -O code/cube_census.py > out.txt 2>&1; then echo "changed expectation not detected"; exit 1; fi
+          echo "negative control detected"
+      - name: Working tree unchanged
+        run: test -z "$(git status --porcelain)"

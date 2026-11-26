@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it using these metadata."
+type: software
+title: "A sharp stop-loss bound for Rademacher sums, the constant two in a concave comparison, and local extremal sets on the discrete cube"
+abstract: "Unrefereed research candidate. For a Rademacher sum S of unit variance, E(|S| - t)+ <= (sqrt(2) - t)/2 for every t in [1/sqrt(2), 201/200], with equality only for two equal weights and a quadratic stability estimate. This proves Lowther's proposed bound, so Kontorovich's concave comparison holds with the sharp constant 2 (also in Hilbert space), and improves Kontorovich's total-variation tensorization constant from 0.1798 to 0.1967. On the discrete cube it gives the local structure of sets of maximal first-level Fourier weight near densities 1/4 and 1/8, partly assuming an unrefereed 2026 theorem of Lei Yu."
+authors:
+  - name: "Anonymous"
+version: "0.1.0"
+date-released: "2026-11-26"
+doi: "10.5281/zenodo.24548728"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.24548728"
+    description: "This version"
+  - type: doi
+    value: "10.5281/zenodo.24548727"
+    description: "All versions (concept DOI)"
+repository-code: "https://github.com/ipitchford/rademacher-stop-loss-concave-comparison"
+url: "https://evidencepress.org/releases/rademacher-stop-loss-concave-comparison/"
+license: CC0-1.0
+keywords:
+  - Rademacher sums
+  - Khintchine inequality
+  - stop-loss transform
+  - concave comparison
+  - total variation distance
+  - discrete cube
+  - Fourier weight
+preferred-citation:
+  type: article
+  title: "A sharp stop-loss bound for Rademacher sums, the constant two in a concave comparison, and local extremal sets on the discrete cube"
+  authors:
+    - name: "Anonymous"
+  year: 2026
+  doi: "10.5281/zenodo.24548728"
+  publisher:
+    name: "Zenodo"
+  notes: "Version 0.1.0; unrefereed"

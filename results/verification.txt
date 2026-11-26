@@ -1,0 +1,10 @@
+Verified 1000 sorted positive integer coefficient tuples (1..4, dimensions 1..10).
+Verified pair-optimal thresholds 1/sqrt(2), 3/4, 1 and 201/200, including equality cases.
+Also verified threshold 2/sqrt(3), with only the three-equal-coefficient equalities.
+Capped equality cases: 4; excess-loss equality cases: 4.
+Verified 923 Hilbert tuples (six specified integer vectors, dimensions 1..6).
+two equal collinear: clipped expectation in [0.5000000000, 0.5000000000].
+two orthogonal: clipped expectation in [1.0000000000, 1.0000000000].
+four equal collinear: clipped expectation in [0.6250000000, 0.6250000000].
+three equal collinear: clipped expectation in [0.6830127018, 0.6830127019].
+All checks passed.
